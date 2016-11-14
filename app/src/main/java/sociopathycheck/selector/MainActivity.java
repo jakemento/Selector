@@ -15,13 +15,11 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-//TO TAG IT IN THE MONITOR:
-// public static final String TAG = MainActivity.class.getSimpleName();
-
-
 private Button mFindWeatherButton;
     private EditText mLocationEditText;
     private TextView mWeatherTextView;
+    private TextView mRecentTextView;
+    private String savedLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +28,22 @@ private Button mFindWeatherButton;
 
      mLocationEditText = (EditText) findViewById(R.id.locationEditText);
      mFindWeatherButton = (Button) findViewById(R.id.findWeatherButton);
+        mRecentTextView = (TextView) findViewById(R.id.recentTextView);
 
         mWeatherTextView = (TextView)findViewById(R.id.weatherTextView);
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mWeatherTextView.setTypeface(quicksand);
 
+        Intent intentThree = getIntent();
+        savedLocation = intentThree.getStringExtra("savedLocation");
 
+        mRecentTextView.setText(savedLocation);
 
      mFindWeatherButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View view) {
 
              String location = mLocationEditText.getText().toString();
-
-             //TO LOG IT IN THE MONITOR
-             // Log.d(TAG, location);
 
              Intent intent = new Intent(MainActivity.this, CitiesActivity.class);
              intent.putExtra("location", location);

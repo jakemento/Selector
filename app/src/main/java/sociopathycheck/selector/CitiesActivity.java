@@ -16,6 +16,7 @@ public class CitiesActivity extends AppCompatActivity {
    private TextView mLocationTextView;
     ImageView mCityImageView;
     Button mBackButton;
+    private String savedLocation;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -32,6 +33,9 @@ public class CitiesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
 
+        savedLocation = location;
+
+
 
         mLocationTextView.setText(location);
         mCityImageView.setImageAlpha(99);
@@ -42,7 +46,9 @@ public class CitiesActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intentTwo = new Intent(CitiesActivity.this, MainActivity.class);
+                intentTwo.putExtra("Savedlocation",savedLocation);
                 startActivity(intentTwo);
+
             }
         });
     }
