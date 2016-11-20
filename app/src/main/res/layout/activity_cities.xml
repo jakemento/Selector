@@ -43,4 +43,12 @@
         android:layout_alignBottom="@+id/locationTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/backButton"
+        android:layout_toRightOf="@+id/backButton"
+        android:id="@+id/listView"
+        android:background="@android:color/background_light" />
 </RelativeLayout>
