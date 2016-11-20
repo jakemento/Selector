@@ -11,16 +11,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import android.widget.TextView;
 
 public class CitiesActivity extends AppCompatActivity {
 
-    private String[] cities = new String[] {"Arcata", "Portland", "Eugene", "St. Petersburg", "Kiev", "Aleppo", "Cairo", "Minsk", "Pinsk", "Toonville", "Rio", "Berlin", "Bejing", "Moscow", "New York", "Denver", "Paris", "Rome", "Bangkok"};
+    @Bind(R.id.locationTextView) TextView mLocationTextView;
+    @Bind(R.id.listView) ListView mListView;
+    @Bind(R.id.backButton) Button mBackButton;
 
-   private TextView mLocationTextView;
-    private ListView mListView;
+    private String[] cities = new String[] {"Arcata", "Portland", "Eugene", "St. Petersburg", "Kiev", "Aleppo", "Cairo", "Minsk", "Pinsk", "Toonville", "Rio", "Berlin", "Bejing", "Moscow", "New York", "Denver", "Paris", "Rome", "Bangkok"};
     ImageView mCityImageView;
-    Button mBackButton;
     private String savedLocation;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -28,14 +30,13 @@ public class CitiesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cities);
+        ButterKnife.bind(this);
 
-        mListView = (ListView) findViewById(R.id.listView);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, cities);
 
         mListView.setAdapter(adapter);
 
         mCityImageView = (ImageView) findViewById(R.id.cityImageView);
-        mLocationTextView = (TextView) findViewById(R.id.locationTextView);
         mBackButton = (Button) findViewById(R.id.backButton);
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");

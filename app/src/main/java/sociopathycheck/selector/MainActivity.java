@@ -9,28 +9,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
-
-private Button mFindWeatherButton;
-    private EditText mLocationEditText;
-    private TextView mWeatherTextView;
-    private TextView mRecentTextView;
     private String savedLocation;
+
+    @Bind(R.id.findWeatherButton) Button mFindWeatherButton;
+    @Bind(R.id.locationEditText) EditText mLocationEditText;
+    @Bind(R.id.weatherTextView) TextView mWeatherTextView;
+    @Bind(R.id.recentTextView) TextView mRecentTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-     mLocationEditText = (EditText) findViewById(R.id.locationEditText);
-     mFindWeatherButton = (Button) findViewById(R.id.findWeatherButton);
-        mRecentTextView = (TextView) findViewById(R.id.recentTextView);
-
-        mWeatherTextView = (TextView)findViewById(R.id.weatherTextView);
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mWeatherTextView.setTypeface(quicksand);
 
