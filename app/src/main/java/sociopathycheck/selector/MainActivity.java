@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
     private String savedLocation;
 
     @Bind(R.id.findWeatherButton) Button mFindWeatherButton;
@@ -37,19 +38,19 @@ public class MainActivity extends AppCompatActivity {
 
         mRecentTextView.setText(savedLocation);
 
-     mFindWeatherButton.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
+     mFindWeatherButton.setOnClickListener(this);
+     }
 
-             String location = mLocationEditText.getText().toString();
+        @Override
+                public void onClick(View v) {
 
-             Intent intent = new Intent(MainActivity.this, CitiesActivity.class);
-             intent.putExtra("location", location);
-             startActivity(intent);
+            if(v == mFindWeatherButton) {
+                String location = mLocationEditText.getText().toString();
+                Intent intent = new Intent(MainActivity.this, CitiesActivity.class);
+                intent.putExtra("location", location);
+                startActivity(intent);
+            }
 
-         }
-     });
-
+        }
 
     }
-}
