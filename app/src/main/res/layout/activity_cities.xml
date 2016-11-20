@@ -53,4 +53,27 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backButton"
+        android:layout_alignRight="@+id/backButton"
+        android:layout_alignEnd="@+id/backButton"
+        android:layout_marginTop="55dp"
+        android:id="@+id/temperatureTextView"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:text="Conditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/temperatureTextView"
+        android:layout_alignLeft="@+id/temperatureTextView"
+        android:layout_alignStart="@+id/temperatureTextView"
+        android:layout_marginTop="24dp"
+        android:id="@+id/conditionTextView"
+        android:textColor="@android:color/background_light" />
+
 </RelativeLayout>

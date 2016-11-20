@@ -15,19 +15,31 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import sociopathycheck.selector.data.Channel;
+import sociopathycheck.selector.service.WeatherServiceCallback;
+import sociopathycheck.selector.service.YahooWeatherService;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CitiesActivity extends AppCompatActivity {
+public class CitiesActivity extends AppCompatActivity implements WeatherServiceCallback {
 
     @Bind(R.id.locationTextView) TextView mLocationTextView;
+    @Bind(R.id.temperatureTextView) TextView mTemperatureTextView;
+    @Bind(R.id.conditionTextView) TextView mConditionTextView;
+
     @Bind(R.id.listView) ListView mListView;
     @Bind(R.id.backButton) Button mBackButton;
+
     public static final String TAG = CitiesActivity.class.getSimpleName();
 
     private String[] cities = new String[] {"Arcata", "Portland", "Eugene", "St. Petersburg", "Kiev", "Aleppo", "Cairo", "Minsk", "Pinsk", "Toonville", "Rio", "Berlin", "Bejing", "Moscow", "New York", "Denver", "Paris", "Rome", "Bangkok"};
     ImageView mCityImageView;
     private String savedLocation;
+
+    private YahooWeatherService service;
+
+
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -78,5 +90,21 @@ public class CitiesActivity extends AppCompatActivity {
 
             }
         });
+
+        service = new YahooWeatherService(this);
+
+        service.refreshWeather("Portland, OR");
+
+    }
+
+    @Override
+    public void serviceSuccess(Channel channel) {
+
+    }
+
+    @Override
+    public void serviceFailure(Exception exception) {
+        Toast.makeText(this, exception.getMessage(), Toast.LENGTH_LONG).show();
+
     }
 }
