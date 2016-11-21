@@ -116,7 +116,7 @@ public class WeatherActivity extends AppCompatActivity {
                             adapter.add("city: " + weather.getName());
                             adapter.add("description: " + weather.getDescription());
                             adapter.add("temperature: " + weather.getTemp() + "˚");
-
+                            adapter.add("humidity: " + weather.getHumidity());
                             adapter.add("wind speed " + weather.getWindSpeed() + " mph");
 
                             Log.d(TAG, "Temp: " + weather.getTemp());
