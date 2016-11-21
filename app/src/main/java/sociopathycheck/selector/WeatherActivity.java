@@ -28,8 +28,10 @@ import java.util.ArrayList;
 public class WeatherActivity extends AppCompatActivity {
 
     public ArrayList<Weather> mWeathers = new ArrayList<>();
+    public ArrayList<Time> mTimes = new ArrayList<>();
 
     @Bind(R.id.locationTextView) TextView mLocationTextView;
+    @Bind(R.id.listViewTwo) ListView mListViewTwo;
 
     @Bind(R.id.listView) ListView mListView;
     @Bind(R.id.backButton) Button mBackButton;
@@ -47,6 +49,7 @@ public class WeatherActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final String location = intent.getStringExtra("location");
         getWeathers(location);
+        getTimes(location);
 
        // old way to set adapter?
         // ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, cities);
@@ -124,6 +127,33 @@ public class WeatherActivity extends AppCompatActivity {
                             Log.d(TAG, "description: " + weather.getDescription());
                             Log.d(TAG, "humidity: " + weather.getHumidity() + "%");
                             Log.d(TAG, "windspeed: " + weather.getWindSpeed());
+                        }
+                    }
+                });
+            }
+        });
+    }
+    private void getTimes(String location) {
+        final TimeService timeService = new TimeService();
+
+        timeService.findTimes(location, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                mTimes = timeService.processResults(response);
+                WeatherActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayAdapter adapterTwo = new ArrayAdapter(WeatherActivity.this,
+                                android.R.layout.simple_list_item_1);
+                        mListViewTwo.setAdapter(adapterTwo);
+
+                        for (Time time : mTimes) {
+                            adapterTwo.add("time: " + time.getTime());
                         }
                     }
                 });

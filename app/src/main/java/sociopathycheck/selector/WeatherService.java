@@ -14,9 +14,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by JS on 11/20/16.
- */
 
 public class WeatherService {
     public static void findWeathers(String city, Callback callback) {

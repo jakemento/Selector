@@ -38,6 +38,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        if (recentCities.isEmpty()) {
+            recentCities.add("recent");
+        }
+        else {
+            recentCities.add(savedLocation);
+        }
+
+
         ArrayAdapter adapterTwo = new ArrayAdapter(this, android.R.layout.simple_list_item_1, recentCities);
         mRecentListView.setAdapter(adapterTwo);
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
@@ -45,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Intent intentThree = getIntent();
         savedLocation = intentThree.getStringExtra("location");
-        recentCities.add(savedLocation);
+
+
 
         mRecentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -62,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-
      mFindWeatherButton.setOnClickListener(this);
      }
 
@@ -73,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String location = mLocationEditText.getText().toString();
                 Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
                 intent.putExtra("location", location);
-                recentCities.add(location);
                 startActivity(intent);
             }
 
