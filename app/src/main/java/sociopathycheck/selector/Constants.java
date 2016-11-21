@@ -5,10 +5,14 @@ package sociopathycheck.selector;
  */
 
 public class Constants {
-    public static final String WEATHER_KEY = BuildConfig.WEATHER_KEY;
+    public static final String WEATHER_API_KEY = BuildConfig.WEATHER_API_KEY;
 
-    public static final String WEATHER_BASE_URL = "api.openweathermap.org/data/2.5/weather?q={city name}";
 
-    public static final String WEATHER_LOCATION_QUERY_PARAMETER = "location";
+
+
+
+    public static final String WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?mode=json&units=imperial&cnt=1";
+    public static final String WEATHER_LOCATION_QUERY_PARAMETER = "q";
+    public static final String WEATHER_API_QUERY_PARAMETER = "appid";
 
 }

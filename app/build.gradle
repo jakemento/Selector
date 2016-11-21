@@ -11,7 +11,7 @@ android {
         versionName "1.0"
 
         buildTypes.each {
-            it.buildConfigField 'String', 'WEATHER_KEY', WeatherKey
+            it.buildConfigField 'String', 'WEATHER_API_KEY', WeatherAPIKey
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
