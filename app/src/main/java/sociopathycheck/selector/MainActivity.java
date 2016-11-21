@@ -25,12 +25,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mWeatherTextView.setTypeface(quicksand);
 
         Intent intentThree = getIntent();
-        savedLocation = intentThree.getStringExtra("savedLocation");
+        savedLocation = intentThree.getStringExtra("location");
 
         mRecentTextView.setText(savedLocation);
 

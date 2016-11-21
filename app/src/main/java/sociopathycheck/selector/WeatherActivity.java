@@ -27,33 +27,28 @@ import java.util.ArrayList;
 
 public class WeatherActivity extends AppCompatActivity {
 
+    public ArrayList<Weather> mWeathers = new ArrayList<>();
+
     @Bind(R.id.locationTextView) TextView mLocationTextView;
-    @Bind(R.id.temperatureTextView) TextView mTemperatureTextView;
-    @Bind(R.id.conditionTextView) TextView mConditionTextView;
 
     @Bind(R.id.listView) ListView mListView;
     @Bind(R.id.backButton) Button mBackButton;
+    @Bind(R.id.cityImageView) ImageView mCityImageView;
 
-
-    public ArrayList<Weather> mWeathers = new ArrayList<>();
     public static final String TAG = WeatherActivity.class.getSimpleName();
 
     //private String[] cities = new String[] {"Arcata", "Portland", "Eugene", "St. Petersburg", "Kiev", "Aleppo", "Cairo", "Minsk", "Pinsk", "Toonville", "Rio", "Berlin", "Bejing", "Moscow", "New York", "Denver", "Paris", "Rome", "Bangkok"};
-    ImageView mCityImageView;
-    private String savedLocation;
-
-
 
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cities);
+        setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        String location = intent.getStringExtra("location");
+        final String location = intent.getStringExtra("location");
         getWeathers(location);
 
        // old way to set adapter?
@@ -61,16 +56,8 @@ public class WeatherActivity extends AppCompatActivity {
        // mListView.setAdapter(adapter);
         //
 
-        mCityImageView = (ImageView) findViewById(R.id.cityImageView);
-        mBackButton = (Button) findViewById(R.id.backButton);
-
-
-
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
-
-
-        savedLocation = location;
 
 
         mLocationTextView.setText(location);
@@ -100,9 +87,10 @@ public class WeatherActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intentTwo = new Intent(WeatherActivity.this, MainActivity.class);
-                intentTwo.putExtra("Savedlocation", savedLocation);
-                startActivity(intentTwo);
 
+                //added the value of savedLocation string
+                intentTwo.putExtra("location", location);
+                startActivity(intentTwo);
             }
 
 

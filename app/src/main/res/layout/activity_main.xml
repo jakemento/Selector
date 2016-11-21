@@ -24,6 +24,18 @@
         style="@android:style/Widget.DeviceDefault.Button.Inset" />
 
     <TextView
+        android:id="@+id/recentTextView"
+        android:textColor="@android:color/background_light"
+        android:textSize="33dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Test text"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
         android:text="Weather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,24 +77,7 @@
         android:layout_toLeftOf="@+id/locationEditText"
         android:layout_toStartOf="@+id/locationEditText" />
 
-    <TextView
 
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="94dp"
-        android:layout_marginStart="94dp"
-        android:layout_marginTop="229dp"
-        android:id="@+id/recentTextView"
-        android:textColor="@color/colorAccent"
-        android:textSize="33dp"
-
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="1dp"
-        android:gravity="center"
-        />
 
 
 </RelativeLayout>
