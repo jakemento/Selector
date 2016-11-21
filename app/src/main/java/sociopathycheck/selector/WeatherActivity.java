@@ -37,9 +37,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     public static final String TAG = WeatherActivity.class.getSimpleName();
 
-    //private String[] cities = new String[] {"Arcata", "Portland", "Eugene", "St. Petersburg", "Kiev", "Aleppo", "Cairo", "Minsk", "Pinsk", "Toonville", "Rio", "Berlin", "Bejing", "Moscow", "New York", "Denver", "Paris", "Rome", "Bangkok"};
-
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
