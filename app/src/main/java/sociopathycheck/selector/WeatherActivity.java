@@ -122,7 +122,6 @@ public class WeatherActivity extends AppCompatActivity {
 
                             adapter.add("wind speed " + weather.getWindSpeed() + " mph");
 
-
                             Log.d(TAG, "Temp: " + weather.getTemp());
                             Log.d(TAG, "City: " + weather.getName());
                             Log.d(TAG, "description: " + weather.getDescription());
