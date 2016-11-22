@@ -14,7 +14,7 @@ public class Constants {
         public static final String TIME_API_KEY = BuildConfig.TIME_API_KEY;
 
         //public static final String TIME_BASE_URL = "http://api.worldweatheronline.com/premium/v1/tz.ashx?&format=json";
-        public static final String TIME_BASE_URL = "http://api.worldweatheronline.com/premium/v1/tz.ashx?&format=json";
+        public static final String TIME_BASE_URL = "http://api.worldweatheronline.com/premium/v1/tz.ashx?format=json";
 
         public static final String TIME_API_QUERY_PARAMETER = "key";
 

@@ -27,6 +27,8 @@ import java.util.ArrayList;
 
 public class WeatherActivity extends AppCompatActivity {
 
+
+
     public ArrayList<Weather> mWeathers = new ArrayList<>();
     public ArrayList<Time> mTimes = new ArrayList<>();
 
@@ -46,21 +48,21 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
 
+
+
         Intent intent = getIntent();
         final String location = intent.getStringExtra("location");
         getWeathers(location);
         getTimes(location);
 
-       // old way to set adapter?
-        // ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, cities);
-       // mListView.setAdapter(adapter);
-        //
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
 
 
         mLocationTextView.setText(location);
+
+
 
         //how to log something
         Log.d(TAG, "In the onCreate method!");
@@ -133,6 +135,8 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
+
     private void getTimes(String location) {
         final TimeService timeService = new TimeService();
 
@@ -148,16 +152,22 @@ public class WeatherActivity extends AppCompatActivity {
                 WeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ArrayAdapter adapterTwo = new ArrayAdapter(WeatherActivity.this,
-                                android.R.layout.simple_list_item_1);
-                        mListViewTwo.setAdapter(adapterTwo);
 
-                        for (Time time : mTimes) {
-                            adapterTwo.add("time: " + time.getTime());
+                        String[] times = new String[mTimes.size()];
+                        for (int i = 0; i < times.length; i++) {
+                            times[i] = mTimes.get(i).getTime();
                         }
+
+                        ArrayAdapter adapterTwo = new ArrayAdapter(WeatherActivity.this,
+                                android.R.layout.simple_list_item_1, times);
+                        mListViewTwo.setAdapter(adapterTwo);
                     }
                 });
+
             }
+
         });
+
     }
+
 }

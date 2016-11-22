@@ -48,14 +48,18 @@ public class TimeService {
             if (response.isSuccessful()) {
 
                 JSONObject timeJSON = new JSONObject(jsonData);
-                JSONArray timesJSON = timeJSON.getJSONArray("data");
+                JSONObject timesJSON =timeJSON.getJSONObject("data");
+                JSONArray timersJSON = timesJSON.getJSONArray("time_zone");
 
-                for (int i = 0; i < timesJSON.length(); i++) {
-                    JSONObject nightJSON = timesJSON.getJSONObject(i);
-                    String localTime = nightJSON.getJSONObject("time_zone").getString("localtime");
+                for (int i = 0; i < timersJSON.length(); i++) {
+                    JSONObject dayJSON = timersJSON.getJSONObject(i);
+
+                    String localTime = dayJSON.getString("localtime");
+
                     Time time = new Time(localTime);
                     times.add(time);
                 }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
