@@ -22,11 +22,11 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String savedLocation;
-
     @Bind(R.id.findWeatherButton) Button mFindWeatherButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
     @Bind(R.id.weatherTextView) TextView mWeatherTextView;
     @Bind(R.id.recentListView) ListView mRecentListView;
+    @Bind(R.id.testButton) Button mTestButton;
 
     // how to set string array
     // private String[] recentCities = new String[] {};
@@ -55,24 +55,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intentThree = getIntent();
         savedLocation = intentThree.getStringExtra("location");
 
-
+        mFindWeatherButton.setOnClickListener(this);
+        mTestButton.setOnClickListener(this);
 
         mRecentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String location = ((TextView)view).getText().toString();
-                Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
-                intent.putExtra("location", location);
-                startActivity(intent);
-
+                Intent intentThree = new Intent(MainActivity.this, WeatherActivity.class);
+                intentThree.putExtra("location", location);
+                startActivity(intentThree);
                 //makes a toast to display on the list view item that is clicked
                 // Toast.makeText(MainActivity.this, city, Toast.LENGTH_SHORT).show();
             }
         });
 
-
-     mFindWeatherButton.setOnClickListener(this);
      }
 
         @Override
@@ -84,9 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("location", location);
                 startActivity(intent);
             }
+            if(v == mTestButton) {
+                Intent intentTwo = new Intent(MainActivity.this, WeatherActivity.class);
+                startActivity(intentTwo);
+            }
 
         }
-
-
-
     }

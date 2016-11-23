@@ -75,5 +75,14 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="83dp" />
 
+    <Button
+        android:text="X"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weatherTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/testButton" />
+
 
 </RelativeLayout>

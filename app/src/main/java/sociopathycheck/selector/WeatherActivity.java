@@ -27,29 +27,22 @@ import java.util.ArrayList;
 
 public class WeatherActivity extends AppCompatActivity {
 
-
-
     public ArrayList<Weather> mWeathers = new ArrayList<>();
     public ArrayList<Time> mTimes = new ArrayList<>();
 
     @Bind(R.id.locationTextView) TextView mLocationTextView;
     @Bind(R.id.listViewTwo) ListView mListViewTwo;
-
     @Bind(R.id.listView) ListView mListView;
     @Bind(R.id.backButton) Button mBackButton;
     @Bind(R.id.cityImageView) ImageView mCityImageView;
-
     public static final String TAG = WeatherActivity.class.getSimpleName();
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
-
-
-
         Intent intent = getIntent();
         final String location = intent.getStringExtra("location");
         getWeathers(location);
@@ -58,14 +51,10 @@ public class WeatherActivity extends AppCompatActivity {
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
-
-
         mLocationTextView.setText(location);
 
-
-
         //how to log something
-        Log.d(TAG, "In the onCreate method!");
+//        Log.d(TAG, "In the onCreate method!");
         //
 
         //makes the image transparent
@@ -124,11 +113,11 @@ public class WeatherActivity extends AppCompatActivity {
                             adapter.add("humidity: " + weather.getHumidity());
                             adapter.add("wind speed " + weather.getWindSpeed() + " mph");
 
-                            Log.d(TAG, "Temp: " + weather.getTemp());
-                            Log.d(TAG, "City: " + weather.getName());
-                            Log.d(TAG, "description: " + weather.getDescription());
-                            Log.d(TAG, "humidity: " + weather.getHumidity() + "%");
-                            Log.d(TAG, "windspeed: " + weather.getWindSpeed());
+//                            Log.d(TAG, "Temp: " + weather.getTemp());
+//                            Log.d(TAG, "City: " + weather.getName());
+//                            Log.d(TAG, "description: " + weather.getDescription());
+//                            Log.d(TAG, "humidity: " + weather.getHumidity() + "%");
+//                            Log.d(TAG, "windspeed: " + weather.getWindSpeed());
                         }
                     }
                 });
