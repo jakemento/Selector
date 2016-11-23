@@ -48,14 +48,13 @@ public class WeatherActivity extends AppCompatActivity {
         getWeathers(location);
         getTimes(location);
 
-
+        //sets up a typeface from the fonts folder & sets textview to it
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
         mLocationTextView.setText(location);
 
-        //how to log something
-//        Log.d(TAG, "In the onCreate method!");
-        //
+
+        Log.d(TAG, "use this log tag to see where the function breaks");
 
         //makes the image transparent
         mCityImageView.setImageAlpha(99);
@@ -125,7 +124,6 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-
     private void getTimes(String location) {
         final TimeService timeService = new TimeService();
 
@@ -145,6 +143,7 @@ public class WeatherActivity extends AppCompatActivity {
                         String[] times = new String[mTimes.size()];
                         for (int i = 0; i < times.length; i++) {
                             times[i] = mTimes.get(i).getTime();
+                            times[i] = times[i].substring(times[i].lastIndexOf(" "));
                         }
 
                         ArrayAdapter adapterTwo = new ArrayAdapter(WeatherActivity.this,
