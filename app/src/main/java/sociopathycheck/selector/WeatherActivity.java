@@ -22,6 +22,10 @@ import okhttp3.Response;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -144,6 +148,14 @@ public class WeatherActivity extends AppCompatActivity {
                         for (int i = 0; i < times.length; i++) {
                             times[i] = mTimes.get(i).getTime();
                             times[i] = times[i].substring(times[i].lastIndexOf(" "));
+                            times[i] = times[i].replaceAll("[:]","");
+                            String timer = times[i];
+
+                            DateTimeFormatter inputFormatter = DateTimeFormat.forPattern(" HHmm");
+                            DateTimeFormatter outputFormatter = DateTimeFormat.forPattern(" hh:mm a");
+                            DateTime dateTime = inputFormatter.parseDateTime(timer);
+                            String formattedTimer = outputFormatter.print(dateTime.getMillis());
+                            times[i] = formattedTimer;
                         }
 
                         ArrayAdapter adapterTwo = new ArrayAdapter(WeatherActivity.this,
