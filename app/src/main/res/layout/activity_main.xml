@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     tools:context="sociopathycheck.selector.MainActivity"
     android:background="@drawable/redwood"
-
-
-
     >
 
 
