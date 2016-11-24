@@ -8,15 +8,6 @@
     tools:context="sociopathycheck.selector.WeatherActivity"
     android:background="#000000">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/rain"
-        android:id="@+id/cityImageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -57,17 +48,16 @@
     <ListView
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:background="@android:color/background_light"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
         android:id="@+id/listViewTwo"
-        android:cacheColorHint="@android:color/background_dark"
         android:paddingLeft="1dp"
         android:paddingRight="1dp"
         android:paddingTop="1dp"
-        android:layout_marginBottom="41dp"
-        android:layout_alignBottom="@+id/cityImageView"
-        android:layout_marginLeft="33dp"
-        android:layout_marginStart="33dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginLeft="57dp"
+        android:layout_marginStart="57dp"
+        android:layout_alignBottom="@+id/backButton"
+        android:layout_toRightOf="@+id/backButton"
+        android:layout_toEndOf="@+id/backButton" />
 
 </RelativeLayout>

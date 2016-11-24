@@ -38,7 +38,6 @@ public class WeatherActivity extends AppCompatActivity {
     @Bind(R.id.listViewTwo) ListView mListViewTwo;
     @Bind(R.id.listView) ListView mListView;
     @Bind(R.id.backButton) Button mBackButton;
-    @Bind(R.id.cityImageView) ImageView mCityImageView;
     public static final String TAG = WeatherActivity.class.getSimpleName();
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -61,7 +60,7 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d(TAG, "use this log tag to see where the function breaks");
 
         //makes the image transparent
-        mCityImageView.setImageAlpha(99);
+//        mCityImageView.setImageAlpha(99);
         //
 
         //sets on click listener toast for listview
@@ -159,7 +158,7 @@ public class WeatherActivity extends AppCompatActivity {
                         }
 
                         ArrayAdapter adapterTwo = new ArrayAdapter(WeatherActivity.this,
-                                android.R.layout.simple_list_item_1, times);
+                                R.layout.list_item,R.id.item_text, times);
                         mListViewTwo.setAdapter(adapterTwo);
                     }
                 });
