@@ -28,17 +28,25 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class WeatherActivity extends AppCompatActivity {
 
     public ArrayList<Weather> mWeathers = new ArrayList<>();
     public ArrayList<Time> mTimes = new ArrayList<>();
+    private String militaryTime;
+    private String militaryTimeTwo;
+    private List<String> militaryArray = new ArrayList<String>();
+    private List<String> militaryArrayTwo = new ArrayList<String>();
+    private String timer;
+    private boolean isClicked = false;
 
     @Bind(R.id.locationTextView) TextView mLocationTextView;
     @Bind(R.id.listViewTwo) ListView mListViewTwo;
     @Bind(R.id.listView) ListView mListView;
     @Bind(R.id.backButton) Button mBackButton;
     public static final String TAG = WeatherActivity.class.getSimpleName();
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
 
@@ -57,23 +65,36 @@ public class WeatherActivity extends AppCompatActivity {
         mLocationTextView.setText(location);
 
 
-        Log.d(TAG, "use this log tag to see where the function breaks");
-
         //makes the image transparent
 //        mCityImageView.setImageAlpha(99);
         //
 
-        //sets on click listener toast for listview
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String city = ((TextView)view).getText().toString();
+                String city = ((TextView) view).getText().toString();
                 Toast.makeText(WeatherActivity.this, city, Toast.LENGTH_SHORT).show();
                 Log.v(TAG, "In the onItemClickListener!");
             }
         });
-        //
+
+        mListViewTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (isClicked == true) {
+                changeTime();
+                    isClicked = false;
+            }
+                else if (isClicked == false) {
+                    changeTimeBack();
+                    isClicked = true;
+                }
+            }
+        });
+
         //tells the back button to go back and send intent with it
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +106,9 @@ public class WeatherActivity extends AppCompatActivity {
                 intentTwo.putExtra("location", location);
                 startActivity(intentTwo);
             }
-
-
         });
     }
+
     private void getWeathers(String location) {
         final WeatherService weatherService = new WeatherService();
 
@@ -110,8 +130,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                         for (Weather weather : mWeathers) {
                             adapter.add("city: " + weather.getName());
-                            adapter.add("description: " + weather.getDescription());
-                            adapter.add("temperature: " + weather.getTemp() + "˚");
+                            adapter.add("conditions: " + weather.getDescription());
+                            adapter.add("temp: " + weather.getTemp() + "˚");
                             adapter.add("humidity: " + weather.getHumidity());
                             adapter.add("wind speed " + weather.getWindSpeed() + " mph");
 
@@ -146,9 +166,15 @@ public class WeatherActivity extends AppCompatActivity {
                         String[] times = new String[mTimes.size()];
                         for (int i = 0; i < times.length; i++) {
                             times[i] = mTimes.get(i).getTime();
+
                             times[i] = times[i].substring(times[i].lastIndexOf(" "));
-                            times[i] = times[i].replaceAll("[:]","");
-                            String timer = times[i];
+                            militaryTimeTwo = times[i];
+
+
+                            times[i] = times[i].replaceAll("[:]", "");
+
+                            timer = times[i];
+                            militaryTime = timer;
 
                             DateTimeFormatter inputFormatter = DateTimeFormat.forPattern(" HHmm");
                             DateTimeFormatter outputFormatter = DateTimeFormat.forPattern(" hh:mm a");
@@ -158,15 +184,33 @@ public class WeatherActivity extends AppCompatActivity {
                         }
 
                         ArrayAdapter adapterTwo = new ArrayAdapter(WeatherActivity.this,
-                                R.layout.list_item,R.id.item_text, times);
+                                R.layout.list_item, R.id.item_text, times);
                         mListViewTwo.setAdapter(adapterTwo);
                     }
                 });
-
             }
-
         });
+    }
+    private void changeTime() {
 
+        militaryArray.add(militaryTime);
+
+        ArrayAdapter adapterThree = new ArrayAdapter(WeatherActivity.this, R.layout.list_item, R.id.item_text, militaryArray);
+        mListViewTwo.setAdapter(adapterThree);
+        isClicked = true;
     }
 
+    private void changeTimeBack() {
+
+        DateTimeFormatter inputFormatter = DateTimeFormat.forPattern(" HHmm");
+        DateTimeFormatter outputFormatter = DateTimeFormat.forPattern(" hh:mm a");
+        DateTime dateTime = inputFormatter.parseDateTime(timer);
+        militaryTimeTwo = outputFormatter.print(dateTime.getMillis());
+
+        militaryArrayTwo.add(militaryTimeTwo);
+        ArrayAdapter adapterFour = new ArrayAdapter(WeatherActivity.this, R.layout.list_item, R.id.item_text, militaryArrayTwo);
+        mListViewTwo.setAdapter(adapterFour);
+    }
 }
+
+

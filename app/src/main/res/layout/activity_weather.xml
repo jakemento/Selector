@@ -21,7 +21,7 @@
 
     <ListView
         android:layout_width="130dp"
-        android:layout_height="250dp"
+        android:layout_height="260dp"
         android:id="@+id/listView"
         android:background="@android:color/background_light"
         android:textColor="@android:color/background_light"
@@ -33,17 +33,25 @@
         android:layout_marginBottom="88dp" />
 
     <Button
-        android:text="Back"
+        android:text="   Back"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:id="@+id/backButton"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
 
         android:backgroundTint="@android:color/background_light"
-        android:textColor="@android:color/background_dark"
 
         android:layout_marginTop="34dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="20sp"
+        android:lineSpacingExtra="14sp"
+        android:textAllCaps="false"
+        android:textAlignment="viewStart"
+        android:textStyle="normal|bold" />
 
     <ListView
         android:layout_width="120dp"
@@ -59,5 +67,6 @@
         android:layout_alignBottom="@+id/backButton"
         android:layout_toRightOf="@+id/backButton"
         android:layout_toEndOf="@+id/backButton" />
+
 
 </RelativeLayout>

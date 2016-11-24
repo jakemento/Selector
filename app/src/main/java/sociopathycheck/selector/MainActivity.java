@@ -1,11 +1,13 @@
 package sociopathycheck.selector;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.weatherTextView) TextView mWeatherTextView;
     @Bind(R.id.recentListView) ListView mRecentListView;
     @Bind(R.id.testButton) Button mTestButton;
+
 
     // how to set string array
     // private String[] recentCities = new String[] {};
