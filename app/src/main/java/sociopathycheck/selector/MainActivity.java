@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -36,27 +37,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ArrayList<String> recentCities = new ArrayList<String>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+//
 
-        if (recentCities.isEmpty()) {
-            recentCities.add("recent");
-        }
-        else {
+        //  FIX THIS RECENT LIST
+//        Intent intentThree = getIntent();
+//        savedLocation = intentThree.getStringExtra("location");
+//        ArrayAdapter adapterTwo = new ArrayAdapter(this, android.R.layout.simple_list_item_1, recentCities);
+//        mRecentListView.setAdapter(adapterTwo);
+
+        if (recentCities != null) {
             recentCities.add(savedLocation);
         }
 
-
-        ArrayAdapter adapterTwo = new ArrayAdapter(this, android.R.layout.simple_list_item_1, recentCities);
-        mRecentListView.setAdapter(adapterTwo);
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mWeatherTextView.setTypeface(quicksand);
 
-        Intent intentThree = getIntent();
-        savedLocation = intentThree.getStringExtra("location");
+
+
 
         mFindWeatherButton.setOnClickListener(this);
         mTestButton.setOnClickListener(this);

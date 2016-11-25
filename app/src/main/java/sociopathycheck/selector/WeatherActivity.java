@@ -3,6 +3,8 @@ package sociopathycheck.selector;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +40,9 @@ public class WeatherActivity extends AppCompatActivity {
     private String militaryTimeTwo;
     private List<String> militaryArray = new ArrayList<String>();
     private List<String> militaryArrayTwo = new ArrayList<String>();
+
+    public ArrayList<String> recentCities = new ArrayList<String>();
+
     private String timer;
     private boolean isClicked = false;
 
@@ -56,6 +61,8 @@ public class WeatherActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         final String location = intent.getStringExtra("location");
+        recentCities.add(location);
+
         getWeathers(location);
         getTimes(location);
 

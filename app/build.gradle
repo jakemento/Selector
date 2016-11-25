@@ -13,6 +13,7 @@ android {
         buildTypes.each {
             it.buildConfigField 'String', 'WEATHER_API_KEY', WeatherAPIKey
             it.buildConfigField 'String', 'TIME_API_KEY', TimeAPIKey
+            it.buildConfigField 'String', 'PLACE_API_KEY', PlaceAPIKey
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
