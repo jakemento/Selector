@@ -5,11 +5,17 @@ package sociopathycheck.selector;
  */
 
 public class Constants {
+
+        //WEATHER
+
         public static final String WEATHER_API_KEY = BuildConfig.WEATHER_API_KEY;
         public static final String WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?mode=json&units=imperial&cnt=1";
 
         public static final String WEATHER_LOCATION_QUERY_PARAMETER = "q";
         public static final String WEATHER_API_QUERY_PARAMETER = "appid";
+
+
+        //TIME
 
         public static final String TIME_API_KEY = BuildConfig.TIME_API_KEY;
 
@@ -20,11 +26,18 @@ public class Constants {
         public static final String TIME_LOCATION_QUERY_PARAMETER = "q";
 
 
+
+
+        // PLACE
+
         public static final String PLACES_API_KEY = BuildConfig.PLACE_API_KEY;
 
         public static final String PLACE_API_QUERY_PARAMETER ="key";
 
-        public static final String PLACES_BASE_URL = " ";
+        // location=40.8665166,-124.0828396 (example)
+        // key=
+
+        public static final String PLACES_BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=500";
 
 //        public static final String PLACES_LOCATION_QUERY_PARAMETER = "";
 

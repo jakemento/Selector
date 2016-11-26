@@ -47,8 +47,8 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
     }
 
     public class PlaceViewHolder extends RecyclerView.ViewHolder {
-//        @Bind(R.id.placeImageView) ImageView mPlaceImageView;
-//        @Bind(R.id.descriptionNameTextView) TextView mDescriptionTextView;
+        @Bind(R.id.placeImageView) ImageView mPlaceImageView;
+//        @Bind(R.id.locationName) TextView mLocationName;
 //        @Bind(R.id.distanceTextView) TextView mDistanceTextView;
 //        @Bind(R.id.cityTextView) TextView mcityTextView;
 
@@ -61,6 +61,7 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Plac
         }
 
         public void bindPlace(Place place) {
+
 //            mNameTextView.setText(restaurant.getName());
 //            mCategoryTextView.setText(restaurant.getCategories().get(0));
 //            mRatingTextView.setText("Rating: " + restaurant.getRating() + "/5");
