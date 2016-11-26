@@ -19,8 +19,10 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 import sociopathycheck.selector.R;
+import sociopathycheck.selector.models.Place;
 import sociopathycheck.selector.models.Time;
 import sociopathycheck.selector.models.Weather;
+import sociopathycheck.selector.services.PlaceService;
 import sociopathycheck.selector.services.TimeService;
 import sociopathycheck.selector.services.WeatherService;
 
@@ -38,6 +40,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     public ArrayList<Weather> mWeathers = new ArrayList<>();
     public ArrayList<Time> mTimes = new ArrayList<>();
+    public ArrayList<Place> mPlaces = new ArrayList<>();
     private String militaryTime;
     Geocoder geocoder;
     List<Address> addresses;
@@ -46,6 +49,7 @@ public class WeatherActivity extends AppCompatActivity {
     private String latitude;
     private String longitude;
     private String latLong;
+    private String photoReference;
 
     private String militaryTimeTwo;
     private List<String> militaryArray = new ArrayList<String>();
@@ -85,6 +89,9 @@ public class WeatherActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        getPlaces(latLong);
+
+
 
         //sets up a typeface from the fonts folder & sets textview to it
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
@@ -247,13 +254,40 @@ public class WeatherActivity extends AppCompatActivity {
         latitude = String.valueOf(lat);
         longitude = String.valueOf(lon);
 
-        latLong = (latitude + longitude);
+        latLong = (latitude + "," + longitude);
 
-
-        mTestTextView.setText(latLong);
+//        mTestTextView.setText(latLong);
     }
 
 
+
+    private void getPlaces(String latLong) {
+        final PlaceService placeService = new PlaceService();
+
+        placeService.findPlace(latLong, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                mPlaces = placeService.processResults(response);
+                WeatherActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//
+                        for (Place place : mPlaces) {
+
+                            mTestTextView.setText(place.getPlace());
+                            photoReference = place.getPlace();
+
+                        }
+                    }
+                });
+            }
+        });
+    }
 
 }
 

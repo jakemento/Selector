@@ -34,12 +34,14 @@ public class Constants {
 
         public static final String PLACE_API_QUERY_PARAMETER ="key";
 
+        public static final String PLACE_LOCATION_QUERY_PARAMETER = "location";
+
         // location=40.8665166,-124.0828396 (example)
         // key=
 
         public static final String PLACES_BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?&radius=500";
 
-//        public static final String PLACES_LOCATION_QUERY_PARAMETER = "";
+//
 
 
 

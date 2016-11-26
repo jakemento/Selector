@@ -5,4 +5,15 @@ package sociopathycheck.selector.models;
  */
 
 public class Place {
+    private String mPhotoReference;
+
+    public Place(String photoReference) {
+        this.mPhotoReference = photoReference;
+    }
+
+    public String getPlace() {
+
+        return mPhotoReference;
+    }
 }
+
