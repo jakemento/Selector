@@ -31,10 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.recentListView) ListView mRecentListView;
     @Bind(R.id.testButton) Button mTestButton;
 
-
-    // how to set string array
-    // private String[] recentCities = new String[] {};
-
     ArrayList<String> recentCities = new ArrayList<String>();
 
 
@@ -44,16 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 //
+//        mRecentListView.setVisibility(View.INVISIBLE);
 
-        //  FIX THIS RECENT LIST
-//        Intent intentThree = getIntent();
-//        savedLocation = intentThree.getStringExtra("location");
+        //RECENT SEARCH LISTVIEW ADAPTER (BROKEN)
+//        Intent intentFour = getIntent();
+//        savedLocation = intentFour.getStringExtra("location");
 //        ArrayAdapter adapterTwo = new ArrayAdapter(this, android.R.layout.simple_list_item_1, recentCities);
 //        mRecentListView.setAdapter(adapterTwo);
-
-        if (recentCities != null) {
-            recentCities.add(savedLocation);
-        }
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mWeatherTextView.setTypeface(quicksand);
@@ -64,18 +57,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFindWeatherButton.setOnClickListener(this);
         mTestButton.setOnClickListener(this);
 
-        mRecentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String location = ((TextView)view).getText().toString();
-                Intent intentThree = new Intent(MainActivity.this, WeatherActivity.class);
-                intentThree.putExtra("location", location);
-                startActivity(intentThree);
-                //makes a toast to display on the list view item that is clicked
-                // Toast.makeText(MainActivity.this, city, Toast.LENGTH_SHORT).show();
-            }
-        });
+        //Search API on recent CLICK
+//        mRecentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                String location = ((TextView)view).getText().toString();
+//                Intent intentThree = new Intent(MainActivity.this, WeatherActivity.class);
+//                intentThree.putExtra("location", location);
+//                startActivity(intentThree);
+//            }
+//        });
 
      }
 
@@ -86,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String location = mLocationEditText.getText().toString();
                 Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
                 intent.putExtra("location", location);
+                recentCities.add(location);
                 startActivity(intent);
             }
             if(v == mTestButton) {

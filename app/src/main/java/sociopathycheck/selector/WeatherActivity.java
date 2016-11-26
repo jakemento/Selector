@@ -40,7 +40,6 @@ public class WeatherActivity extends AppCompatActivity {
     private String militaryTimeTwo;
     private List<String> militaryArray = new ArrayList<String>();
     private List<String> militaryArrayTwo = new ArrayList<String>();
-
     public ArrayList<String> recentCities = new ArrayList<String>();
 
     private String timer;
@@ -48,8 +47,13 @@ public class WeatherActivity extends AppCompatActivity {
 
     @Bind(R.id.locationTextView) TextView mLocationTextView;
     @Bind(R.id.listViewTwo) ListView mListViewTwo;
-    @Bind(R.id.listView) ListView mListView;
+
     @Bind(R.id.backButton) Button mBackButton;
+    @Bind(R.id.cityTextView) TextView mCityTextView;
+    @Bind(R.id.temperatureTextView) TextView mTemperatureTextView;
+    @Bind(R.id.conditionsTextView) TextView mConditionsTextView;
+    @Bind(R.id.windspeedTextView) TextView mWindspeedTextView;
+    @Bind(R.id.humidityTextView) TextView mHumidityTextView;
     public static final String TAG = WeatherActivity.class.getSimpleName();
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -76,15 +80,6 @@ public class WeatherActivity extends AppCompatActivity {
 //        mCityImageView.setImageAlpha(99);
         //
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String city = ((TextView) view).getText().toString();
-                Toast.makeText(WeatherActivity.this, city, Toast.LENGTH_SHORT).show();
-                Log.v(TAG, "In the onItemClickListener!");
-            }
-        });
 
         mListViewTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -111,6 +106,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                 //added the value of savedLocation string
                 intentTwo.putExtra("location", location);
+                recentCities.add(location);
                 startActivity(intentTwo);
             }
         });
@@ -131,22 +127,23 @@ public class WeatherActivity extends AppCompatActivity {
                 WeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ArrayAdapter adapter = new ArrayAdapter(WeatherActivity.this,
-                                android.R.layout.simple_list_item_1);
-                        mListView.setAdapter(adapter);
+//                        ArrayAdapter adapter = new ArrayAdapter(WeatherActivity.this,
+//                                android.R.layout.simple_list_item_1);
+//                        mListView.setAdapter(adapter);
 
                         for (Weather weather : mWeathers) {
-                            adapter.add("city: " + weather.getName());
-                            adapter.add("conditions: " + weather.getDescription());
-                            adapter.add("temp: " + weather.getTemp() + "˚");
-                            adapter.add("humidity: " + weather.getHumidity());
-                            adapter.add("wind speed " + weather.getWindSpeed() + " mph");
-
+//                            adapter.add("city: " + weather.getName());
+//                            adapter.add("conditions: " + weather.getDescription());
+//                            adapter.add("temp: " + weather.getTemp() + "˚");
+//                            adapter.add("humidity: " + weather.getHumidity());
+//                            adapter.add("wind speed " + weather.getWindSpeed() + " mph");
 //                            Log.d(TAG, "Temp: " + weather.getTemp());
-//                            Log.d(TAG, "City: " + weather.getName());
-//                            Log.d(TAG, "description: " + weather.getDescription());
-//                            Log.d(TAG, "humidity: " + weather.getHumidity() + "%");
-//                            Log.d(TAG, "windspeed: " + weather.getWindSpeed());
+
+                            mCityTextView.setText(weather.getName());
+                            mTemperatureTextView.setText("temp: " + weather.getTemp()+"˚");
+                            mConditionsTextView.setText(weather.getDescription());
+                            mHumidityTextView.setText("humidity: "+ weather.getHumidity());
+                            mWindspeedTextView.setText("wind speed: "+ weather.getWindSpeed()+"mph");
                         }
                     }
                 });
@@ -173,9 +170,8 @@ public class WeatherActivity extends AppCompatActivity {
                         String[] times = new String[mTimes.size()];
                         for (int i = 0; i < times.length; i++) {
                             times[i] = mTimes.get(i).getTime();
-
-                            times[i] = times[i].substring(times[i].lastIndexOf(" "));
                             militaryTimeTwo = times[i];
+                            times[i] = times[i].substring(times[i].lastIndexOf(" "));
 
 
                             times[i] = times[i].replaceAll("[:]", "");
@@ -218,6 +214,9 @@ public class WeatherActivity extends AppCompatActivity {
         ArrayAdapter adapterFour = new ArrayAdapter(WeatherActivity.this, R.layout.list_item, R.id.item_text, militaryArrayTwo);
         mListViewTwo.setAdapter(adapterFour);
     }
+
+
+
 }
 
 
