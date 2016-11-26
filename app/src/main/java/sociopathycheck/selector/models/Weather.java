@@ -1,4 +1,4 @@
-package sociopathycheck.selector;
+package sociopathycheck.selector.models;
 
 /**
  * Created by JS on 11/20/16.
@@ -21,7 +21,6 @@ public class Weather {
         this.mDescription = description;
         this.mHumidity = humidity;
         this.mWindSpeed = windSpeed;
-
     }
 
     public int getTemp() {

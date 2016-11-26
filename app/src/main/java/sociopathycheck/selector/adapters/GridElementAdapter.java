@@ -1,4 +1,4 @@
-package sociopathycheck.selector;
+package sociopathycheck.selector.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import sociopathycheck.selector.R;
 
 /**
  * Created by JS on 11/23/16.

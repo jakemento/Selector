@@ -5,7 +5,7 @@
     android:id="@+id/activity_cities"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sociopathycheck.selector.WeatherActivity"
+    tools:context="sociopathycheck.selector.ui.WeatherActivity"
     android:background="#000000">
 
     <Button
@@ -99,6 +99,23 @@
         android:textAlignment="center"
         android:layout_below="@+id/listViewTwo"
         android:layout_alignEnd="@+id/humidityTextView" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/humidityTextView"
+        android:layout_toStartOf="@+id/temperatureTextView"
+        android:layout_marginTop="207dp" />
+
+    <TextView
+        android:text="test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/humidityTextView"
+        android:layout_toEndOf="@+id/backButton"
+        android:layout_marginTop="87dp"
+        android:id="@+id/testTextView"
+        android:textColor="@color/Primary" />
 
 
 </RelativeLayout>

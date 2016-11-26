@@ -1,4 +1,4 @@
-package sociopathycheck.selector;
+package sociopathycheck.selector.services;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +13,8 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import sociopathycheck.selector.Constants;
+import sociopathycheck.selector.models.Time;
 
 /**
  * Created by JS on 11/20/16.

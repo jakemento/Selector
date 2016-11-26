@@ -1,4 +1,4 @@
-package sociopathycheck.selector;
+package sociopathycheck.selector.models;
 
 /**
  * Created by JS on 11/20/16.

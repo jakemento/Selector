@@ -22,9 +22,11 @@ public class Constants {
 
         public static final String PLACES_API_KEY = BuildConfig.PLACE_API_KEY;
 
+        public static final String PLACE_API_QUERY_PARAMETER ="key";
+
         public static final String PLACES_BASE_URL = " ";
 
-        public static final String PLACES_LOCATION_QUERY_PARAMETER = "";
+//        public static final String PLACES_LOCATION_QUERY_PARAMETER = "";
 
 
 

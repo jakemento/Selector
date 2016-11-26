@@ -1,4 +1,4 @@
-package sociopathycheck.selector;
+package sociopathycheck.selector.ui;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -8,21 +8,23 @@ import android.location.Geocoder;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import sociopathycheck.selector.R;
+import sociopathycheck.selector.models.Time;
+import sociopathycheck.selector.models.Weather;
+import sociopathycheck.selector.services.TimeService;
+import sociopathycheck.selector.services.WeatherService;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -37,6 +39,14 @@ public class WeatherActivity extends AppCompatActivity {
     public ArrayList<Weather> mWeathers = new ArrayList<>();
     public ArrayList<Time> mTimes = new ArrayList<>();
     private String militaryTime;
+    Geocoder geocoder;
+    List<Address> addresses;
+    double lat;
+    double lon;
+    private String latitude;
+    private String longitude;
+    private String latLong;
+
     private String militaryTimeTwo;
     private List<String> militaryArray = new ArrayList<String>();
     private List<String> militaryArrayTwo = new ArrayList<String>();
@@ -49,6 +59,7 @@ public class WeatherActivity extends AppCompatActivity {
     @Bind(R.id.listViewTwo) ListView mListViewTwo;
 
     @Bind(R.id.backButton) Button mBackButton;
+    @Bind(R.id.testTextView) TextView mTestTextView;
     @Bind(R.id.cityTextView) TextView mCityTextView;
     @Bind(R.id.temperatureTextView) TextView mTemperatureTextView;
     @Bind(R.id.conditionsTextView) TextView mConditionsTextView;
@@ -69,6 +80,11 @@ public class WeatherActivity extends AppCompatActivity {
 
         getWeathers(location);
         getTimes(location);
+        try {
+            geoLocate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //sets up a typeface from the fonts folder & sets textview to it
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
@@ -213,6 +229,28 @@ public class WeatherActivity extends AppCompatActivity {
         militaryArrayTwo.add(militaryTimeTwo);
         ArrayAdapter adapterFour = new ArrayAdapter(WeatherActivity.this, R.layout.list_item, R.id.item_text, militaryArrayTwo);
         mListViewTwo.setAdapter(adapterFour);
+    }
+
+
+    public void geoLocate() throws IOException {
+        Intent intent = getIntent();
+        String locationer = intent.getStringExtra("location");
+
+        Geocoder gc = new Geocoder(this);
+        List<Address> list = gc.getFromLocationName(locationer, 1);
+        Address add = list.get(0);
+        String locality = add.getLocality();
+
+        double lat = add.getLatitude();
+        double lon = add.getLongitude();
+
+        latitude = String.valueOf(lat);
+        longitude = String.valueOf(lon);
+
+        latLong = (latitude + longitude);
+
+
+        mTestTextView.setText(latLong);
     }
 
 
