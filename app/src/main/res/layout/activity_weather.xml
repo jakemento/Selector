@@ -117,5 +117,15 @@
         android:id="@+id/testTextView"
         android:textColor="@color/Primary" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_below="@+id/testTextView"
+        android:layout_toStartOf="@+id/humidityTextView"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="54dp"
+        android:id="@+id/testImageView" />
+
 
 </RelativeLayout>

@@ -43,6 +43,12 @@ public class Constants {
 
 //
 
+        // PHOTO
+
+        public static final String PHOTO_LOCATION_QUERY_PARAMETER = "photoreference";
+
+        public static final String PHOTOS_BASE_URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800";
+
 
 
 }

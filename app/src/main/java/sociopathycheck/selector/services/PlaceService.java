@@ -59,7 +59,7 @@ public class PlaceService {
                 JSONArray placerJSON = photosJSON.getJSONArray("photos");
                 JSONObject photosTwoJSON = placerJSON.getJSONObject(0);
                 String placeString = photosTwoJSON.getString("photo_reference");
-                Log.d(TAG, placeString);
+//                Log.d(TAG, placeString);
                 Place place = new Place(placeString);
                 places.add(place);
 
