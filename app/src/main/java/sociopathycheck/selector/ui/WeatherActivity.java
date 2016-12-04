@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,6 +61,7 @@ public class WeatherActivity extends AppCompatActivity {
     private String longitude;
     private String latLong;
     private String photoReference;
+    public String weatherIcon;
     private String url;
     private String militaryTimeTwo;
     private List<String> militaryArray = new ArrayList<String>();
@@ -82,7 +84,8 @@ public class WeatherActivity extends AppCompatActivity {
     @Bind(R.id.windspeedTextView) TextView mWindspeedTextView;
     @Bind(R.id.humidityTextView) TextView mHumidityTextView;
     @Bind(R.id.photosButton) Button mPhotosButton;
-//    public String[] photoArray = urlStrings.toArray(new String[] {});
+    @Bind(R.id.weatherIconImageView)
+    ImageView mWeatherIconImageView;
     public ArrayList photo_list = new ArrayList<>();
 
 
@@ -121,14 +124,15 @@ public class WeatherActivity extends AppCompatActivity {
 
         initViews();
 
-
-
+//
+//        weatherIconPicker();
 
 
         //sets up a typeface from the fonts folder & sets textview to it
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
         mLocationTextView.setText(location);
+
 
 
         //makes the image transparent
@@ -194,6 +198,7 @@ public class WeatherActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 mWeathers = weatherService.processResults(response);
                 WeatherActivity.this.runOnUiThread(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void run() {
 //                        ArrayAdapter adapter = new ArrayAdapter(WeatherActivity.this,
@@ -201,18 +206,38 @@ public class WeatherActivity extends AppCompatActivity {
 //                        mListView.setAdapter(adapter);
 
                         for (Weather weather : mWeathers) {
-//
+                            weatherIcon = weather.getDescription().toString();
                             mCityTextView.setText(weather.getName());
-                            mTemperatureTextView.setText("temp: " + weather.getTemp() + "˚");
+                            mTemperatureTextView.setText(weather.getTemp() + "˚F");
                             mConditionsTextView.setText(weather.getDescription());
-                            mHumidityTextView.setText("humidity: " + weather.getHumidity());
-                            mWindspeedTextView.setText("wind speed: " + weather.getWindSpeed() + "mph");
+                            mHumidityTextView.setText("humid: " + weather.getHumidity());
+                            mWindspeedTextView.setText("wind: " + weather.getWindSpeed() + "mph");
+
+                            if (weatherIcon.contains("snow")) {
+                                mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.snow));
+                            }
+                            if (weatherIcon.contains("rain")) {
+                                mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.rainy));
+                            }
+
+                            if (weatherIcon.contains("cloud")) {
+                                mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.partialsunny));
+                            }
+//
+                            if (weatherIcon.contains("lightning")) {
+                                mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.lightning));
+                            }
+                            if (weatherIcon.contains("sun") || (weatherIcon.contains("clear sky"))) {
+                                mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.sunny));
+                            }
                         }
                     }
                 });
             }
         });
     }
+
+
 
     private void getTimes(String location) {
         final TimeService timeService = new TimeService();
@@ -297,11 +322,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         latLong = (latitude + "," + longitude);
 
-//        mTestTextView.setText(latLong);
     }
-
-
-
 
     private void getPlaces(String latLong) {
         final PlaceService placeService = new PlaceService();
@@ -326,15 +347,7 @@ public class WeatherActivity extends AppCompatActivity {
                             String PLACE_API_KEY = Constants.PLACES_API_KEY;
                             url = Constants.PHOTOS_BASE_URL + "&key=" + PLACE_API_KEY + "&photoreference=" + photoReference;
                             urlStrings.add(url);
-//                            Log.d(TAG, urlStrings.toString());
-
-
-//                                Picasso.with(mTestImageView.getContext()).load(url).into(mTestImageView);
-
                         }
-
-//                        Log.d(TAG, urlStrings.toString());
-
                     }
                 });
             }
@@ -342,12 +355,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
-
-
     private void initViews(){
-//        Log.d(TAG, photoArray.toString());
-
-
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.card_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -372,7 +380,23 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
+//       @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    public void weatherIconPicker() {
+//        if (weatherIcon.contains("snow")) {
+//            mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.snow));
+//        }
+//        else {
+//            mWeatherIconImageView.setVisibility(View.INVISIBLE);
+//        }
+//    }
+
 }
+
+
+
+
+
+
 
 
 
