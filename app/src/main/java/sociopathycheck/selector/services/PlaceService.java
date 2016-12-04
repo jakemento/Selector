@@ -55,13 +55,27 @@ public class PlaceService {
 
                 JSONObject placeJSON = new JSONObject(jsonData);
                 JSONArray placesJSON =placeJSON.getJSONArray("results");
-                JSONObject photosJSON = placesJSON.getJSONObject(0);
-                JSONArray placerJSON = photosJSON.getJSONArray("photos");
-                JSONObject photosTwoJSON = placerJSON.getJSONObject(0);
-                String placeString = photosTwoJSON.getString("photo_reference");
-//                Log.d(TAG, placeString);
-                Place place = new Place(placeString);
-                places.add(place);
+
+                for (int i = 0; i < placesJSON.length(); i++) {
+                    JSONObject theJSON = placesJSON.getJSONObject(i);
+                    JSONArray placerJSON = theJSON.getJSONArray("photos");
+//                     Log.d(TAG, placerJSON.toString(0));
+                    JSONObject photosTwoJSON = placerJSON.getJSONObject(0);
+                    String placeString = photosTwoJSON.getString("photo_reference");
+                    Place place = new Place(placeString);
+                    places.add(place);
+                }
+//                Log.d(TAG, places.toString());
+
+
+
+
+//                JSONObject photosJSON = placesJSON.getJSONObject(0);
+//                JSONArray placerJSON = photosJSON.getJSONArray("photos");
+//                JSONObject photosTwoJSON = placerJSON.getJSONObject(0);
+//                String placeString = photosTwoJSON.getString("photo_reference");
+////                Log.d(TAG, placeString);
+
 
             }
         } catch (IOException e) {

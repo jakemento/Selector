@@ -1,53 +1,50 @@
 package sociopathycheck.selector.ui;
 
+import android.Manifest;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import sociopathycheck.selector.Constants;
+import sociopathycheck.selector.DataAdapter;
 import sociopathycheck.selector.R;
 import sociopathycheck.selector.models.Photo;
 import sociopathycheck.selector.models.Place;
 import sociopathycheck.selector.models.Time;
 import sociopathycheck.selector.models.Weather;
-import sociopathycheck.selector.services.PhotoService;
 import sociopathycheck.selector.services.PlaceService;
 import sociopathycheck.selector.services.TimeService;
 import sociopathycheck.selector.services.WeatherService;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +53,9 @@ public class WeatherActivity extends AppCompatActivity {
     public ArrayList<Weather> mWeathers = new ArrayList<>();
     public ArrayList<Time> mTimes = new ArrayList<>();
     public ArrayList<Place> mPlaces = new ArrayList<>();
-    public ArrayList<Photo> mPhotos = new ArrayList<>();
 
     private String militaryTime;
-    Geocoder geocoder;
-    List<Address> addresses;
-    double lat;
-    double lon;
+
     private String latitude;
     private String longitude;
     private String latLong;
@@ -73,30 +66,30 @@ public class WeatherActivity extends AppCompatActivity {
     private List<String> militaryArrayTwo = new ArrayList<String>();
     public ArrayList<String> recentCities = new ArrayList<String>();
 
+
     private String timer;
     private boolean isClicked = false;
 
+    public ArrayList<String> urlStrings = new ArrayList<String>();
+//    public String photoArray[] = urlStrings.toArray(new String[] {});
 
-    @Bind(R.id.locationTextView)
-    TextView mLocationTextView;
-    @Bind(R.id.listViewTwo)
-    ListView mListViewTwo;
-    @Bind(R.id.testImageView)
-    ImageView mTestImageView;
-    @Bind(R.id.backButton)
-    Button mBackButton;
-    @Bind(R.id.testTextView)
-    TextView mTestTextView;
-    @Bind(R.id.cityTextView)
-    TextView mCityTextView;
-    @Bind(R.id.temperatureTextView)
-    TextView mTemperatureTextView;
-    @Bind(R.id.conditionsTextView)
-    TextView mConditionsTextView;
-    @Bind(R.id.windspeedTextView)
-    TextView mWindspeedTextView;
-    @Bind(R.id.humidityTextView)
-    TextView mHumidityTextView;
+    @Bind(R.id.locationTextView) TextView mLocationTextView;
+    @Bind(R.id.listViewTwo) ListView mListViewTwo;
+    @Bind(R.id.backButton) Button mBackButton;
+    @Bind(R.id.cityTextView) TextView mCityTextView;
+    @Bind(R.id.temperatureTextView) TextView mTemperatureTextView;
+    @Bind(R.id.conditionsTextView) TextView mConditionsTextView;
+    @Bind(R.id.windspeedTextView) TextView mWindspeedTextView;
+    @Bind(R.id.humidityTextView) TextView mHumidityTextView;
+    @Bind(R.id.photosButton) Button mPhotosButton;
+//    public String[] photoArray = urlStrings.toArray(new String[] {});
+    public ArrayList photo_list = new ArrayList<>();
+
+
+
+
+//    @Bind(R.id.testImageView) ImageView mTestImageView;
+
     public static final String TAG = WeatherActivity.class.getSimpleName();
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -106,6 +99,8 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
+
+
         Intent intent = getIntent();
         final String location = intent.getStringExtra("location");
         recentCities.add(location);
@@ -118,6 +113,17 @@ public class WeatherActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         getPlaces(latLong);
+
+        //IT HAS TO GO HERE!!!!
+//        String photoArray[] = urlStrings.toArray(new String[] {});
+
+
+
+        initViews();
+
+
+
+
 
         //sets up a typeface from the fonts folder & sets textview to it
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
@@ -158,7 +164,22 @@ public class WeatherActivity extends AppCompatActivity {
                 startActivity(intentTwo);
             }
         });
+
+        mPhotosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String[] photoArray = urlStrings.toArray(new String[] {});
+
+
+                Intent intentPhotos = new Intent(WeatherActivity.this, PhotoActivity.class);
+
+                //added the value of savedLocation string
+                intentPhotos.putExtra("photoArray", photoArray );
+                startActivity(intentPhotos);
+            }
+        });
     }
+
 
     private void getWeathers(String location) {
         final WeatherService weatherService = new WeatherService();
@@ -280,6 +301,8 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
 
+
+
     private void getPlaces(String latLong) {
         final PlaceService placeService = new PlaceService();
 
@@ -299,17 +322,62 @@ public class WeatherActivity extends AppCompatActivity {
                         for (Place place : mPlaces) {
 
                             photoReference = place.getPlace();
-                            Log.d(TAG, photoReference);
+//                            Log.d(TAG, photoReference);
                             String PLACE_API_KEY = Constants.PLACES_API_KEY;
                             url = Constants.PHOTOS_BASE_URL + "&key=" + PLACE_API_KEY + "&photoreference=" + photoReference;
-                            Picasso.with(mTestImageView.getContext()).load(url).into(mTestImageView);
+                            urlStrings.add(url);
+//                            Log.d(TAG, urlStrings.toString());
+
+
+//                                Picasso.with(mTestImageView.getContext()).load(url).into(mTestImageView);
+
                         }
+
+//                        Log.d(TAG, urlStrings.toString());
+
                     }
                 });
             }
         });
+
     }
+
+
+
+    private void initViews(){
+//        Log.d(TAG, photoArray.toString());
+
+
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.card_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        ArrayList photoList = prepareData();
+        DataAdapter adapter = new DataAdapter(getApplicationContext(),photoList);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    private ArrayList prepareData(){
+        String[] photoArray = urlStrings.toArray(new String[] {});
+
+        for(int i=0;i<photoArray.length;i++){
+            Photo photo = new Photo();
+            photo.setPhoto_url(photoArray[i]);
+            photo_list.add(photo);
+
+        }
+        return photo_list;
+
+    }
+
 }
+
+
+
+
+
 
 
 

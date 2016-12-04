@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Selector</string>
+    <string name="title_activity_photo">PhotoActivity</string>
 </resources>

@@ -1,21 +1,19 @@
 package sociopathycheck.selector.models;
 
-import android.media.Image;
-
 /**
- * Created by JS on 11/26/16.
+ * Created by JS on 12/1/16.
  */
 
 public class Photo {
-    private String mPhoto;
 
-    public Photo(String photo) {
-        this.mPhoto = photo;
+    private String photo_url;
+
+    public String getPhoto_url() {
+        return photo_url;
     }
 
-    public String getPhoto() {
+    public void setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
 
-        return mPhoto;
     }
 }
-

@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+tools:context=".ui.PhotoActivity"
+android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark">
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photoThree"
+        android:layout_below="@+id/photoOne"
+        android:layout_alignLeft="@+id/photoOne"
+        android:layout_alignStart="@+id/photoOne"
+        android:layout_marginTop="33dp" />
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photoFour"
+        android:layout_alignTop="@+id/photoThree"
+        android:layout_alignLeft="@+id/photoTwo"
+        android:layout_alignStart="@+id/photoTwo" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photoFive"
+        android:layout_below="@+id/photoThree"
+        android:layout_alignLeft="@+id/photoThree"
+        android:layout_alignStart="@+id/photoThree"
+        android:layout_marginTop="41dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photoSix"
+        android:layout_alignTop="@+id/photoFive"
+        android:layout_alignLeft="@+id/photoFour"
+        android:layout_alignStart="@+id/photoFour" />
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photoEight"
+        android:layout_alignTop="@+id/photoSeven"
+        android:layout_alignLeft="@+id/photoSix"
+        android:layout_alignStart="@+id/photoSix" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photoSeven"
+        android:layout_below="@+id/photoFive"
+        android:layout_alignLeft="@+id/photoFive"
+        android:layout_alignStart="@+id/photoFive"
+        android:layout_marginTop="37dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photoOne"
+        android:layout_toLeftOf="@+id/photoTwo"
+        android:layout_toStartOf="@+id/photoTwo"
+        android:layout_marginRight="51dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginTop="15dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/photoTwo"
+        android:layout_marginRight="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_alignTop="@+id/photoOne"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/photoEight"
+        android:layout_toStartOf="@+id/photoEight"
+        android:id="@+id/emptyPhotosTextView"
+        android:textColor="@color/Primary" />
+
+
+</RelativeLayout>
