@@ -48,91 +48,116 @@
         android:layout_toRightOf="@+id/backButton"
         android:layout_toEndOf="@+id/backButton" />
 
-    <TextView
-        android:text="Conditions"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/conditionsTextView"
-        android:textColor="@color/Primary"
-        android:layout_above="@+id/temperatureTextView"
-        android:layout_alignStart="@+id/temperatureTextView" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:text="Temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/temperatureTextView"
-        android:textColor="@color/Primary"
-        android:layout_alignBaseline="@+id/locationTextView"
-        android:layout_alignBottom="@+id/locationTextView"
-        android:layout_toEndOf="@+id/listViewTwo" />
+        "
+            />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/locationTextView"
-        android:layout_marginLeft="13dp"
-        android:layout_below="@+id/backButton"
-        android:layout_toEndOf="@+id/cityTextView"
-        android:layout_marginTop="49dp" />
-
-    <TextView
-        android:text="windspeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/windspeedTextView"
-        android:textColor="@color/Primary"
-        android:layout_below="@+id/temperatureTextView"
-        android:layout_alignEnd="@+id/conditionsTextView" />
-
-    <TextView
-        android:text="humidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/humidityTextView"
-        android:textColor="@color/Primary"
-        android:layout_below="@+id/windspeedTextView"
-        android:layout_alignStart="@+id/windspeedTextView" />
-
-    <TextView
-        android:text="City"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cityTextView"
-        android:textColor="@color/Primary"
-        android:textAlignment="center"
-        android:layout_below="@+id/listViewTwo"
-        android:layout_alignEnd="@+id/humidityTextView" />
+        <TextView
+            android:text="City"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cityTextView"
+            android:textColor="@color/Primary"
+            android:textAlignment="viewStart"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="101dp"
+            android:textSize="22sp" />
 
 
-    <Button
-        android:text="Photos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/humidityTextView"
-        android:layout_toRightOf="@+id/backButton"
-        android:layout_toEndOf="@+id/backButton"
-        android:layout_marginLeft="25dp"
-        android:layout_marginStart="25dp"
-        android:id="@+id/photosButton" />
+        <ImageView
+            android:id="@+id/weatherIconImageView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_above="@+id/conditionsTextView"
+            android:layout_toRightOf="@+id/photosButton"
+            android:layout_toEndOf="@+id/photosButton"
+            android:layout_marginLeft="29dp"
+            android:layout_marginStart="29dp" />
 
-    <ImageView
-        android:id="@+id/weatherIconImageView"
-        android:layout_below="@+id/photosButton"
-        android:layout_alignLeft="@+id/listViewTwo"
-        android:layout_alignStart="@+id/listViewTwo"
-        android:layout_width="75dp"
-        android:layout_height="75dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/locationTextView"
+            android:layout_alignBaseline="@+id/temperatureTextView"
+            android:layout_alignBottom="@+id/temperatureTextView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="59dp"
+            android:layout_marginEnd="59dp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/card_recycler_view"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignTop="@+id/listViewTwo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <Button
+            android:text="Photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/photosButton"
+            android:backgroundTint="@android:color/background_dark"
+            android:textColor="@color/Primary"
+            android:layout_below="@+id/windspeedTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Conditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/conditionsTextView"
+            android:textColor="@color/Primary"
+            android:textAlignment="viewStart"
+            android:layout_below="@+id/temperatureTextView"
+            android:layout_alignLeft="@+id/cityTextView"
+            android:layout_alignStart="@+id/cityTextView" />
+
+        <TextView
+            android:text="humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/humidityTextView"
+            android:textColor="@color/Primary"
+            android:textAlignment="viewStart"
+            android:layout_below="@+id/conditionsTextView" />
+
+        <TextView
+            android:text="windspeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/windspeedTextView"
+            android:textColor="@color/Primary"
+
+            android:textAlignment="viewStart"
+            android:layout_below="@+id/humidityTextView"
+            android:layout_alignLeft="@+id/humidityTextView"
+            android:layout_alignStart="@+id/humidityTextView" />
+
+        <TextView
+            android:text="Temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/temperatureTextView"
+            android:textColor="@color/Primary"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:layout_below="@+id/cityTextView"
+            android:layout_alignLeft="@+id/cityTextView"
+            android:layout_alignStart="@+id/cityTextView" />
+
+        <TextView
+            android:text="population"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/populationTextView"
+            android:textColor="@color/Primary" />
+
+
+    </RelativeLayout>
+
 
     <!--<ImageView-->
         <!--android:layout_width="wrap_content"-->

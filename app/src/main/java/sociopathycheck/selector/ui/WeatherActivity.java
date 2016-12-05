@@ -23,8 +23,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import oauth.signpost.http.HttpResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.DataAdapter;
@@ -44,8 +48,15 @@ import android.widget.Toast;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +65,7 @@ public class WeatherActivity extends AppCompatActivity {
     public ArrayList<Weather> mWeathers = new ArrayList<>();
     public ArrayList<Time> mTimes = new ArrayList<>();
     public ArrayList<Place> mPlaces = new ArrayList<>();
-
     private String militaryTime;
-
     private String latitude;
     private String longitude;
     private String latLong;
@@ -67,31 +76,37 @@ public class WeatherActivity extends AppCompatActivity {
     private List<String> militaryArray = new ArrayList<String>();
     private List<String> militaryArrayTwo = new ArrayList<String>();
     public ArrayList<String> recentCities = new ArrayList<String>();
-
-
     private String timer;
     private boolean isClicked = false;
-
     public ArrayList<String> urlStrings = new ArrayList<String>();
-//    public String photoArray[] = urlStrings.toArray(new String[] {});
+    private String cityInfoUrl;
+    private String population;
 
-    @Bind(R.id.locationTextView) TextView mLocationTextView;
-    @Bind(R.id.listViewTwo) ListView mListViewTwo;
-    @Bind(R.id.backButton) Button mBackButton;
-    @Bind(R.id.cityTextView) TextView mCityTextView;
-    @Bind(R.id.temperatureTextView) TextView mTemperatureTextView;
-    @Bind(R.id.conditionsTextView) TextView mConditionsTextView;
-    @Bind(R.id.windspeedTextView) TextView mWindspeedTextView;
-    @Bind(R.id.humidityTextView) TextView mHumidityTextView;
-    @Bind(R.id.photosButton) Button mPhotosButton;
+    @Bind(R.id.locationTextView)
+    TextView mLocationTextView;
+    @Bind(R.id.listViewTwo)
+    ListView mListViewTwo;
+    @Bind(R.id.backButton)
+    Button mBackButton;
+    @Bind(R.id.cityTextView)
+    TextView mCityTextView;
+    @Bind(R.id.temperatureTextView)
+    TextView mTemperatureTextView;
+    @Bind(R.id.conditionsTextView)
+    TextView mConditionsTextView;
+    @Bind(R.id.windspeedTextView)
+    TextView mWindspeedTextView;
+    @Bind(R.id.humidityTextView)
+    TextView mHumidityTextView;
+    @Bind(R.id.photosButton)
+    Button mPhotosButton;
     @Bind(R.id.weatherIconImageView)
     ImageView mWeatherIconImageView;
+    @Bind(R.id.populationTextView)
+    TextView mPopulationTextView;
     public ArrayList photo_list = new ArrayList<>();
+    private final OkHttpClient client = new OkHttpClient();
 
-
-
-
-//    @Bind(R.id.testImageView) ImageView mTestImageView;
 
     public static final String TAG = WeatherActivity.class.getSimpleName();
 
@@ -102,7 +117,6 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
-
 
         Intent intent = getIntent();
         final String location = intent.getStringExtra("location");
@@ -117,22 +131,13 @@ public class WeatherActivity extends AppCompatActivity {
         }
         getPlaces(latLong);
 
-        //IT HAS TO GO HERE!!!!
-//        String photoArray[] = urlStrings.toArray(new String[] {});
-
-
-
         initViews();
+        cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
+        Log.d(TAG, cityInfoUrl);
 
-//
-//        weatherIconPicker();
-
-
-        //sets up a typeface from the fonts folder & sets textview to it
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
         mLocationTextView.setText(location);
-
 
 
         //makes the image transparent
@@ -155,14 +160,11 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
-        //tells the back button to go back and send intent with it
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intentTwo = new Intent(WeatherActivity.this, MainActivity.class);
-
-                //added the value of savedLocation string
                 intentTwo.putExtra("location", location);
                 recentCities.add(location);
                 startActivity(intentTwo);
@@ -172,13 +174,10 @@ public class WeatherActivity extends AppCompatActivity {
         mPhotosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] photoArray = urlStrings.toArray(new String[] {});
-
+                String[] photoArray = urlStrings.toArray(new String[]{});
 
                 Intent intentPhotos = new Intent(WeatherActivity.this, PhotoActivity.class);
-
-                //added the value of savedLocation string
-                intentPhotos.putExtra("photoArray", photoArray );
+                intentPhotos.putExtra("photoArray", photoArray);
                 startActivity(intentPhotos);
             }
         });
@@ -210,8 +209,8 @@ public class WeatherActivity extends AppCompatActivity {
                             mCityTextView.setText(weather.getName());
                             mTemperatureTextView.setText(weather.getTemp() + "˚F");
                             mConditionsTextView.setText(weather.getDescription());
-                            mHumidityTextView.setText("humid: " + weather.getHumidity());
-                            mWindspeedTextView.setText("wind: " + weather.getWindSpeed() + "mph");
+                            mHumidityTextView.setText("humidity: " + weather.getHumidity() + "%");
+                            mWindspeedTextView.setText("wind speed: " + weather.getWindSpeed() + "mph");
 
                             if (weatherIcon.contains("snow")) {
                                 mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.snow));
@@ -236,8 +235,6 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     private void getTimes(String location) {
         final TimeService timeService = new TimeService();
@@ -321,6 +318,7 @@ public class WeatherActivity extends AppCompatActivity {
         longitude = String.valueOf(lon);
 
         latLong = (latitude + "," + longitude);
+        Log.d(TAG, latLong);
 
     }
 
@@ -355,22 +353,22 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
-    private void initViews(){
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.card_recycler_view);
-        recyclerView.setHasFixedSize(true);
+    private void initViews() {
+//        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.card_recycler_view);
+//        recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setLayoutManager(layoutManager);
 
         ArrayList photoList = prepareData();
-        DataAdapter adapter = new DataAdapter(getApplicationContext(),photoList);
-        recyclerView.setAdapter(adapter);
+        DataAdapter adapter = new DataAdapter(getApplicationContext(), photoList);
+//        recyclerView.setAdapter(adapter);
 
     }
 
-    private ArrayList prepareData(){
-        String[] photoArray = urlStrings.toArray(new String[] {});
+    private ArrayList prepareData() {
+        String[] photoArray = urlStrings.toArray(new String[]{});
 
-        for(int i=0;i<photoArray.length;i++){
+        for (int i = 0; i < photoArray.length; i++) {
             Photo photo = new Photo();
             photo.setPhoto_url(photoArray[i]);
             photo_list.add(photo);
@@ -379,19 +377,7 @@ public class WeatherActivity extends AppCompatActivity {
         return photo_list;
 
     }
-
-//       @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//    public void weatherIconPicker() {
-//        if (weatherIcon.contains("snow")) {
-//            mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.snow));
-//        }
-//        else {
-//            mWeatherIconImageView.setVisibility(View.INVISIBLE);
-//        }
-//    }
-
 }
-
 
 
 

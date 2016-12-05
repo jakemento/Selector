@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -28,19 +29,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<String> recentCities = new ArrayList<String>();
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//
-//        mRecentListView.setVisibility(View.INVISIBLE);
 
-        //RECENT SEARCH LISTVIEW ADAPTER (BROKEN)
-//        Intent intentFour = getIntent();
-//        savedLocation = intentFour.getStringExtra("location");
-//        ArrayAdapter adapterTwo = new ArrayAdapter(this, android.R.layout.simple_list_item_1, recentCities);
-//        mRecentListView.setAdapter(adapterTwo);
+        if (recentCities.isEmpty()) {
+            mRecentListView.setVisibility(View.INVISIBLE);
+        } else {
+
+            Intent intentFour = getIntent();
+            savedLocation = intentFour.getStringExtra("location");
+            recentCities.add(savedLocation);
+            ArrayAdapter adapterTwo = new ArrayAdapter(this, android.R.layout.simple_list_item_1, recentCities);
+            mRecentListView.setAdapter(adapterTwo);
+            mRecentListView.setVisibility(View.VISIBLE);
+
+        }
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mWeatherTextView.setTypeface(quicksand);
@@ -70,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if(v == mFindWeatherButton) {
                 String location = mLocationEditText.getText().toString();
+//                recentCities.add(location);
                 Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
                 intent.putExtra("location", location);
                 recentCities.add(location);

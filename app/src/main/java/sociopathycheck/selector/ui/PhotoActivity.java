@@ -1,6 +1,7 @@
 package sociopathycheck.selector.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -45,6 +47,10 @@ public class PhotoActivity extends AppCompatActivity {
     ImageView mPhotoSeven;
     @Bind(R.id.photoEight)
     ImageView mPhotoEight;
+
+
+
+
     @Bind(R.id. emptyPhotosTextView)
     TextView mEmptyPhotosTextView;
 
@@ -56,6 +62,8 @@ public class PhotoActivity extends AppCompatActivity {
     public String photoSix = "";
     public String photoSeven = "";
     public String photoEight = "";
+    private boolean zoomOut =  false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +175,8 @@ public class PhotoActivity extends AppCompatActivity {
 
                 }
     }
+
+
 }
 
 

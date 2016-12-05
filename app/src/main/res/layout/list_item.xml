@@ -14,5 +14,6 @@
         android:layout_width="fill_parent"
         android:layout_weight="1"
         android:text="dynamic text"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp" />
 </LinearLayout>
