@@ -146,14 +146,24 @@
             android:layout_alignStart="@+id/cityTextView" />
 
         <TextView
+            android:text="Population:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:textColor="@color/Primary"
+            android:layout_above="@+id/populationTextView"
+            android:layout_alignLeft="@+id/populationTextView"
+            android:layout_alignStart="@+id/populationTextView" />
+
+        <TextView
             android:text="population"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:id="@+id/populationTextView"
-            android:textColor="@color/Primary" />
+            android:textColor="@color/Primary"
+            android:layout_above="@+id/weatherIconImageView"
+            android:layout_alignRight="@+id/locationTextView"
+            android:layout_alignEnd="@+id/locationTextView" />
 
 
     </RelativeLayout>

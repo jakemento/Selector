@@ -1,15 +1,11 @@
 package sociopathycheck.selector.ui;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,42 +22,36 @@ import butterknife.ButterKnife;
 import oauth.signpost.http.HttpResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Headers;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.DataAdapter;
 import sociopathycheck.selector.R;
 import sociopathycheck.selector.models.Photo;
 import sociopathycheck.selector.models.Place;
+import sociopathycheck.selector.models.Population;
 import sociopathycheck.selector.models.Time;
 import sociopathycheck.selector.models.Weather;
 import sociopathycheck.selector.services.PlaceService;
-import sociopathycheck.selector.services.TimeService;
+import sociopathycheck.selector.services.PopulationService;
 import sociopathycheck.selector.services.WeatherService;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URLConnection;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class WeatherActivity extends AppCompatActivity {
 
+    public ArrayList<Population> mPopulations = new ArrayList<>();
     public ArrayList<Weather> mWeathers = new ArrayList<>();
     public ArrayList<Time> mTimes = new ArrayList<>();
     public ArrayList<Place> mPlaces = new ArrayList<>();
@@ -71,6 +61,9 @@ public class WeatherActivity extends AppCompatActivity {
     private String latLong;
     private String photoReference;
     public String weatherIcon;
+    private String formattedUrl;
+    private String myPopulation;
+    private int myPopulationInt;
     private String url;
     private String militaryTimeTwo;
     private List<String> militaryArray = new ArrayList<String>();
@@ -133,8 +126,8 @@ public class WeatherActivity extends AppCompatActivity {
 
         initViews();
         cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
-        Log.d(TAG, cityInfoUrl);
-
+        getPopulation(cityInfoUrl);
+//
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
         mLocationTextView.setText(location);
@@ -237,7 +230,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     private void getTimes(String location) {
-        final TimeService timeService = new TimeService();
+        final Weather.TimeService timeService = new Weather.TimeService();
 
         timeService.findTimes(location, new Callback() {
             @Override
@@ -299,6 +292,10 @@ public class WeatherActivity extends AppCompatActivity {
         militaryArrayTwo.add(militaryTimeTwo);
         ArrayAdapter adapterFour = new ArrayAdapter(WeatherActivity.this, R.layout.list_item, R.id.item_text, militaryArrayTwo);
         mListViewTwo.setAdapter(adapterFour);
+    }
+
+    private void getPopulation() {
+
     }
 
 
@@ -376,6 +373,39 @@ public class WeatherActivity extends AppCompatActivity {
         }
         return photo_list;
 
+    }
+
+
+
+    private void getPopulation(String url) {
+        final PopulationService populationService = new PopulationService();
+
+        populationService.findPopulation(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                mPopulations = populationService.processResults(response);
+                WeatherActivity.this.runOnUiThread(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void run() {
+//
+                        for (Population population : mPopulations) {
+
+                            myPopulation = population.getPopulation();
+                            myPopulationInt = Integer.parseInt(myPopulation);
+                            formattedUrl = NumberFormat.getNumberInstance(Locale.US).format(myPopulationInt);
+                            mPopulationTextView.setText(formattedUrl);
+
+                        }
+                    }
+                });
+            }
+        });
     }
 }
 

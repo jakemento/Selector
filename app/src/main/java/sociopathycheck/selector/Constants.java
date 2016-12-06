@@ -49,6 +49,4 @@ public class Constants {
 
         public static final String PHOTOS_BASE_URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800";
 
-
-
 }
