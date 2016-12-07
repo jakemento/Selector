@@ -134,6 +134,8 @@ public class WeatherActivity extends AppCompatActivity {
         mPopulationTextView.setVisibility(View.INVISIBLE);
         mPopulationTwoTextView.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
+        mYelpButton.setVisibility(View.INVISIBLE);
+        mPhotosButton.setVisibility(View.INVISIBLE);
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
@@ -182,6 +184,8 @@ public class WeatherActivity extends AppCompatActivity {
         mSearchCitiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mPhotosButton.setVisibility(View.VISIBLE);
+                mYelpButton.setVisibility(View.VISIBLE);
 
                 newSearch = mSearchCities.getText().toString();
                 mSearchCities.setText("");
@@ -202,8 +206,6 @@ public class WeatherActivity extends AppCompatActivity {
                 cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
                 getPopulation(cityInfoUrl);
                 mLocationTextView.setText(newSearch);
-
-
 
                 mPhotosButton.setOnClickListener(new View.OnClickListener() {
                     @Override

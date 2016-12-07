@@ -31,17 +31,6 @@
             android:textSize="22sp" />
 
 
-        <Button
-            android:text="Photos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/photosButton"
-            android:backgroundTint="@android:color/background_dark"
-            android:textColor="@color/Primary"
-            android:layout_below="@+id/windspeedTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
         <TextView
             android:text="Conditions"
             android:layout_width="wrap_content"
@@ -115,7 +104,9 @@
             android:layout_alignRight="@+id/locationTextView"
             android:layout_alignEnd="@+id/locationTextView"
             android:layout_marginRight="11dp"
-            android:layout_marginEnd="11dp" />
+            android:layout_marginEnd="11dp"
+            android:layout_toRightOf="@+id/listViewTwo"
+            android:layout_toEndOf="@+id/listViewTwo" />
 
         <TextView
             android:text="Population:"
@@ -129,12 +120,25 @@
             android:layout_marginRight="42dp"
             android:layout_marginEnd="42dp" />
 
+        <Button
+            android:text="Photos"
+            android:padding="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:id="@+id/photosButton"
+            android:backgroundTint="@android:color/background_dark"
+            android:textColor="@color/Primary"
+            android:layout_below="@+id/windspeedTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="14dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/locationTextView"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -146,18 +150,16 @@
             android:id="@+id/yelpButton"
             android:textColor="@color/Primary"
             android:background="@android:color/background_dark"
-            android:layout_above="@+id/recyclerView"
-            android:layout_alignRight="@+id/conditionsTextView"
-            android:layout_alignEnd="@+id/conditionsTextView" />
+            android:layout_below="@+id/photosButton"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="400dp"
             android:layout_height="200dp"
             android:id="@+id/recyclerView"
-            android:layout_below="@+id/photosButton"
+            android:layout_below="@+id/yelpButton"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="15dp">
+            android:layout_alignParentStart="true">
         </android.support.v7.widget.RecyclerView>
 
 
