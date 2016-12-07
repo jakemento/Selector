@@ -31,18 +31,6 @@
             android:textSize="22sp" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/locationTextView"
-            android:layout_alignBaseline="@+id/temperatureTextView"
-            android:layout_alignBottom="@+id/temperatureTextView"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="59dp"
-            android:layout_marginEnd="59dp" />
-
         <Button
             android:text="Photos"
             android:layout_width="wrap_content"
@@ -140,6 +128,37 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="42dp"
             android:layout_marginEnd="42dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/locationTextView"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:text="Yelp"
+            android:padding="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:id="@+id/yelpButton"
+            android:textColor="@color/Primary"
+            android:background="@android:color/background_dark"
+            android:layout_above="@+id/recyclerView"
+            android:layout_alignRight="@+id/conditionsTextView"
+            android:layout_alignEnd="@+id/conditionsTextView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:id="@+id/recyclerView"
+            android:layout_below="@+id/photosButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="15dp">
+        </android.support.v7.widget.RecyclerView>
 
 
     </RelativeLayout>

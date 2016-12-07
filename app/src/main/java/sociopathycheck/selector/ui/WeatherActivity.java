@@ -28,14 +28,17 @@ import okhttp3.Response;
 import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.DataAdapter;
 import sociopathycheck.selector.R;
+import sociopathycheck.selector.adapters.RestaurantListAdapter;
 import sociopathycheck.selector.models.Photo;
 import sociopathycheck.selector.models.Place;
 import sociopathycheck.selector.models.Population;
+import sociopathycheck.selector.models.Restaurant;
 import sociopathycheck.selector.models.Time;
 import sociopathycheck.selector.models.Weather;
 import sociopathycheck.selector.services.PlaceService;
 import sociopathycheck.selector.services.PopulationService;
 import sociopathycheck.selector.services.WeatherService;
+import sociopathycheck.selector.services.YelpService;
 
 import android.widget.TextView;
 
@@ -75,9 +78,12 @@ public class WeatherActivity extends AppCompatActivity {
     private String timer;
     private String [] photoArray;
     private boolean isClicked = false;
+    private boolean isClickedTwo = false;
     public ArrayList<String> urlStrings = new ArrayList<String>();
     private String cityInfoUrl;
     private String population;
+    public ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+
 
     @Bind(R.id.locationTextView)
     TextView mLocationTextView;
@@ -105,8 +111,15 @@ public class WeatherActivity extends AppCompatActivity {
     TextView mPopulationTextView;
     @Bind(R.id.populationTwoTextView)
     TextView mPopulationTwoTextView;
+    @Bind(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.yelpButton)
+    Button mYelpButton;
+
     public ArrayList photo_list = new ArrayList<>();
+    private RestaurantListAdapter mAdapter;
     private final OkHttpClient client = new OkHttpClient();
+
 
 
     public static final String TAG = WeatherActivity.class.getSimpleName();
@@ -120,6 +133,7 @@ public class WeatherActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mPopulationTextView.setVisibility(View.INVISIBLE);
         mPopulationTwoTextView.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
@@ -131,12 +145,7 @@ public class WeatherActivity extends AppCompatActivity {
         mCityTextView.setTypeface(quicksand);
         mPhotosButton.setTypeface(quicksand);
         mPopulationTwoTextView.setTypeface(quicksand);
-
-
-
-        //makes the image transparent
-//        mCityImageView.setImageAlpha(99);
-        //
+        mYelpButton.setTypeface(quicksand);
 
 
         mListViewTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -154,11 +163,30 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
+        mYelpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (isClickedTwo == true) {
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                    isClickedTwo = false;
+                } else if (isClickedTwo == false) {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+
+                    isClickedTwo = true;
+                }
+            }
+        });
+
         mSearchCitiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 newSearch = mSearchCities.getText().toString();
+                mSearchCities.setText("");
+                getRestaurants(newSearch);
+
                 getWeathers(newSearch);
                 getTimes(newSearch);
 
@@ -174,8 +202,7 @@ public class WeatherActivity extends AppCompatActivity {
                 cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
                 getPopulation(cityInfoUrl);
                 mLocationTextView.setText(newSearch);
-                mPopulationTwoTextView.setVisibility(View.VISIBLE);
-                mPopulationTextView.setVisibility(View.VISIBLE);
+
 
 
                 mPhotosButton.setOnClickListener(new View.OnClickListener() {
@@ -392,6 +419,8 @@ public class WeatherActivity extends AppCompatActivity {
                             mPopulationTextView.setText(formattedUrl);
 
                         }
+                        mPopulationTwoTextView.setVisibility(View.VISIBLE);
+                        mPopulationTextView.setVisibility(View.VISIBLE);
                     }
                 });
             }
@@ -410,8 +439,38 @@ public class WeatherActivity extends AppCompatActivity {
         longitude = String.valueOf(lon);
         latLong = (latitude + "," + longitude);
     }
-}
 
+
+    private void getRestaurants(String location) {
+        final YelpService yelpService = new YelpService();
+
+        yelpService.findRestaurants(location, new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                mRestaurants = yelpService.processResults(response);
+
+                WeatherActivity.this.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mAdapter = new RestaurantListAdapter(getApplicationContext(), mRestaurants);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager =
+                                new LinearLayoutManager(WeatherActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
+                    }
+                });
+            }
+        });
+    }
+}
 
 
 

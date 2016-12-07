@@ -11,6 +11,12 @@ android {
         versionName "1.0"
 
         buildTypes.each {
+            
+            it.buildConfigField 'String', 'YELP_CONSUMER_KEY', YelpConsumerKey
+            it.buildConfigField 'String', 'YELP_CONSUMER_SECRET', YelpConsumerSecret
+            it.buildConfigField 'String', 'YELP_TOKEN', YelpToken
+            it.buildConfigField 'String', 'YELP_TOKEN_SECRET', YelpTokenSecret
+
             it.buildConfigField 'String', 'WEATHER_API_KEY', WeatherAPIKey
             it.buildConfigField 'String', 'TIME_API_KEY', TimeAPIKey
             it.buildConfigField 'String', 'PLACE_API_KEY', PlaceAPIKey
