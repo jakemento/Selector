@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import butterknife.Bind;
@@ -58,9 +59,11 @@ public class WeatherActivity extends AppCompatActivity {
     private String militaryTime;
     private String latitude;
     private String longitude;
+    private String newSearch;
     private String latLong;
     private String photoReference;
     public String weatherIcon;
+    private String locationer;
     private String formattedUrl;
     private String myPopulation;
     private int myPopulationInt;
@@ -70,6 +73,7 @@ public class WeatherActivity extends AppCompatActivity {
     private List<String> militaryArrayTwo = new ArrayList<String>();
     public ArrayList<String> recentCities = new ArrayList<String>();
     private String timer;
+    private String [] photoArray;
     private boolean isClicked = false;
     public ArrayList<String> urlStrings = new ArrayList<String>();
     private String cityInfoUrl;
@@ -77,10 +81,12 @@ public class WeatherActivity extends AppCompatActivity {
 
     @Bind(R.id.locationTextView)
     TextView mLocationTextView;
+    @Bind(R.id.searchCities)
+    EditText mSearchCities;
+    @Bind(R.id.searchCitiesButton)
+    Button mSearchCitiesButton;
     @Bind(R.id.listViewTwo)
     ListView mListViewTwo;
-    @Bind(R.id.backButton)
-    Button mBackButton;
     @Bind(R.id.cityTextView)
     TextView mCityTextView;
     @Bind(R.id.temperatureTextView)
@@ -97,6 +103,8 @@ public class WeatherActivity extends AppCompatActivity {
     ImageView mWeatherIconImageView;
     @Bind(R.id.populationTextView)
     TextView mPopulationTextView;
+    @Bind(R.id.populationTwoTextView)
+    TextView mPopulationTwoTextView;
     public ArrayList photo_list = new ArrayList<>();
     private final OkHttpClient client = new OkHttpClient();
 
@@ -110,27 +118,20 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
+        mPopulationTextView.setVisibility(View.INVISIBLE);
+        mPopulationTwoTextView.setVisibility(View.INVISIBLE);
 
-        Intent intent = getIntent();
-        final String location = intent.getStringExtra("location");
-        recentCities.add(location);
-
-        getWeathers(location);
-        getTimes(location);
-        try {
-            geoLocate();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        getPlaces(latLong);
-
-        initViews();
-        cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
-        getPopulation(cityInfoUrl);
-//
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
-        mLocationTextView.setText(location);
+        mPopulationTextView.setTypeface(quicksand);
+        mConditionsTextView.setTypeface(quicksand);
+        mHumidityTextView.setTypeface(quicksand);
+        mTemperatureTextView.setTypeface(quicksand);
+        mWindspeedTextView.setTypeface(quicksand);
+        mCityTextView.setTypeface(quicksand);
+        mPhotosButton.setTypeface(quicksand);
+        mPopulationTwoTextView.setTypeface(quicksand);
+
 
 
         //makes the image transparent
@@ -153,29 +154,45 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
-        mBackButton.setOnClickListener(new View.OnClickListener() {
+        mSearchCitiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intentTwo = new Intent(WeatherActivity.this, MainActivity.class);
-                intentTwo.putExtra("location", location);
-                recentCities.add(location);
-                startActivity(intentTwo);
-            }
-        });
+                newSearch = mSearchCities.getText().toString();
+                getWeathers(newSearch);
+                getTimes(newSearch);
 
-        mPhotosButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String[] photoArray = urlStrings.toArray(new String[]{});
+                try {
+                    geoLocateTwo();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                Intent intentPhotos = new Intent(WeatherActivity.this, PhotoActivity.class);
-                intentPhotos.putExtra("photoArray", photoArray);
-                startActivity(intentPhotos);
+                getPlaces(latLong);
+
+                initViews();
+                cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
+                getPopulation(cityInfoUrl);
+                mLocationTextView.setText(newSearch);
+                mPopulationTwoTextView.setVisibility(View.VISIBLE);
+                mPopulationTextView.setVisibility(View.VISIBLE);
+
+
+                mPhotosButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        photoArray = urlStrings.toArray(new String[]{});
+                        urlStrings.clear();
+
+                        Intent intentPhotos = new Intent(WeatherActivity.this, PhotoActivity.class);
+                        intentPhotos.putExtra("photoArray", photoArray);
+                        startActivity(intentPhotos);
+                    }
+                });
+
             }
         });
     }
-
 
     private void getWeathers(String location) {
         final WeatherService weatherService = new WeatherService();
@@ -294,31 +311,6 @@ public class WeatherActivity extends AppCompatActivity {
         mListViewTwo.setAdapter(adapterFour);
     }
 
-    private void getPopulation() {
-
-    }
-
-
-    public void geoLocate() throws IOException {
-        Intent intent = getIntent();
-        String locationer = intent.getStringExtra("location");
-
-        Geocoder gc = new Geocoder(this);
-        List<Address> list = gc.getFromLocationName(locationer, 1);
-        Address add = list.get(0);
-        String locality = add.getLocality();
-
-        double lat = add.getLatitude();
-        double lon = add.getLongitude();
-
-        latitude = String.valueOf(lat);
-        longitude = String.valueOf(lon);
-
-        latLong = (latitude + "," + longitude);
-        Log.d(TAG, latLong);
-
-    }
-
     private void getPlaces(String latLong) {
         final PlaceService placeService = new PlaceService();
 
@@ -375,8 +367,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
-
-
     private void getPopulation(String url) {
         final PopulationService populationService = new PopulationService();
 
@@ -407,7 +397,22 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void geoLocateTwo() throws IOException {
+        Geocoder gc = new Geocoder(this);
+        List<Address> list = gc.getFromLocationName(newSearch, 1);
+        Address add = list.get(0);
+
+        double lat = add.getLatitude();
+        double lon = add.getLongitude();
+
+        latitude = String.valueOf(lat);
+        longitude = String.valueOf(lon);
+        latLong = (latitude + "," + longitude);
+    }
 }
+
+
 
 
 

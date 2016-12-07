@@ -74,7 +74,9 @@ public class PhotoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
+
         final String[] PhotoArray = getIntent().getStringArrayExtra("photoArray");
+
 
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()

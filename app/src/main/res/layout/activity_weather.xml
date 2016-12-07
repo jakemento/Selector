@@ -10,44 +10,6 @@
     android:background="@android:color/background_dark">
 
 
-
-
-
-    <Button
-        android:text="   Back"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:id="@+id/backButton"
-        android:background="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
-
-        android:backgroundTint="@android:color/background_light"
-
-        android:layout_marginTop="34dp"
-
-        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textSize="20sp"
-        android:lineSpacingExtra="14sp"
-        android:textAllCaps="false"
-        android:textAlignment="viewStart"
-        android:textStyle="normal|bold" />
-
-    <ListView
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:background="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
-        android:id="@+id/listViewTwo"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp"
-        android:paddingTop="1dp"
-        android:layout_marginLeft="57dp"
-        android:layout_marginStart="57dp"
-        android:layout_alignBottom="@+id/backButton"
-        android:layout_toRightOf="@+id/backButton"
-        android:layout_toEndOf="@+id/backButton" />
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -68,16 +30,6 @@
             android:layout_marginTop="101dp"
             android:textSize="22sp" />
 
-
-        <ImageView
-            android:id="@+id/weatherIconImageView"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_above="@+id/conditionsTextView"
-            android:layout_toRightOf="@+id/photosButton"
-            android:layout_toEndOf="@+id/photosButton"
-            android:layout_marginLeft="29dp"
-            android:layout_marginStart="29dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -145,28 +97,77 @@
             android:layout_alignLeft="@+id/cityTextView"
             android:layout_alignStart="@+id/cityTextView" />
 
-        <TextView
-            android:text="Population:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:textColor="@color/Primary"
-            android:layout_above="@+id/populationTextView"
-            android:layout_alignLeft="@+id/populationTextView"
-            android:layout_alignStart="@+id/populationTextView" />
+        <ImageView
+            android:id="@+id/weatherIconImageView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/cityTextView"
+            android:layout_alignStart="@+id/cityTextView"
+            android:layout_marginTop="19dp" />
+
+        <ListView
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
+            android:id="@+id/listViewTwo"
+
+            android:layout_alignTop="@+id/weatherIconImageView"
+            android:layout_toLeftOf="@+id/populationTwoTextView"
+            android:layout_toStartOf="@+id/populationTwoTextView"
+            android:layout_marginTop="18dp" />
 
         <TextView
-            android:text="population"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/populationTextView"
             android:textColor="@color/Primary"
-            android:layout_above="@+id/weatherIconImageView"
+            android:layout_alignBottom="@+id/listViewTwo"
             android:layout_alignRight="@+id/locationTextView"
-            android:layout_alignEnd="@+id/locationTextView" />
+            android:layout_alignEnd="@+id/locationTextView"
+            android:layout_marginRight="11dp"
+            android:layout_marginEnd="11dp" />
+
+        <TextView
+            android:text="Population:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/populationTwoTextView"
+            android:textColor="@color/Primary"
+            android:layout_above="@+id/populationTextView"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="42dp"
+            android:layout_marginEnd="42dp" />
 
 
     </RelativeLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/searchCities"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@android:color/white"
+        android:hint="Search" />
+
+    <Button
+        android:text="Go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchCitiesButton"
+        android:textColor="@color/Primary"
+        android:backgroundTint="@android:color/background_dark"
+        android:layout_alignTop="@+id/searchCities"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="128dp"
+        android:layout_marginEnd="128dp" />
 
 
     <!--<ImageView-->

@@ -15,5 +15,6 @@
         android:layout_weight="1"
         android:text="dynamic text"
         android:textColor="@android:color/background_light"
-        android:textSize="20sp" />
+        android:textSize="14sp"
+        />
 </LinearLayout>
