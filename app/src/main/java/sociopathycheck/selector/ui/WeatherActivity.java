@@ -202,13 +202,13 @@ public class WeatherActivity extends AppCompatActivity {
         mSevenDayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDark(latLong);
 
 
                 if (isClickedThree == true) {
                     mSummaryTextView.setVisibility(View.INVISIBLE);
                     isClickedThree = false;
                 } else if (isClickedThree == false) {
+                    getDark(latLong);
                     mSummaryTextView.setVisibility(View.VISIBLE);
 
                     isClickedThree = true;
