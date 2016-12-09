@@ -1,5 +1,7 @@
 package sociopathycheck.selector.services;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +26,8 @@ import sociopathycheck.selector.models.Weather;
  */
 
 public class DarkService {
+    public static final String TAG = DarkService.class.getSimpleName();
+
 
     public static void findDark(String latLong, Callback callback) {
         String DARKSKY_API_KEY = Constants.DARKSKY_API_KEY;
@@ -41,9 +45,8 @@ public class DarkService {
         Call call = client.newCall(request);
         call.enqueue(callback);
 
-
     }
-    public ArrayList<DarkSky> processResults(Response response) {
+    public static ArrayList<DarkSky> processResults(Response response) {
         ArrayList<DarkSky> darkskies = new ArrayList<>();
 
         try {
@@ -51,12 +54,21 @@ public class DarkService {
             if (response.isSuccessful()) {
                 JSONObject darkJSON = new JSONObject(jsonData);
                 JSONObject dailyJSON = darkJSON.getJSONObject("daily");
-                String summary = dailyJSON.getString("summary");
+                JSONArray dataArray = dailyJSON.getJSONArray("data");
+                for (int i = 0; i < dataArray.length(); i++) {
+                    JSONObject sevenJSON = dataArray.getJSONObject(i);
+                    int preDate = (sevenJSON.getInt("time"));
+                    String date = String.valueOf(preDate);
+                    String summary = sevenJSON.getString("summary");
+                    int tempPreHigh = sevenJSON.getInt("temperatureMax");
+                    String tempHigh = String.valueOf(tempPreHigh);
+                    int tempPreLow = sevenJSON.getInt("temperatureMin");
+                    String tempLow = String.valueOf(tempPreLow);
 
-
-                    DarkSky darksky = new DarkSky(summary);
+                    DarkSky darksky = new DarkSky(summary, date, tempHigh, tempLow);
                     darkskies.add(darksky);
                 }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

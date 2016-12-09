@@ -29,6 +29,7 @@ import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.DataAdapter;
 import sociopathycheck.selector.R;
 import sociopathycheck.selector.adapters.RestaurantListAdapter;
+import sociopathycheck.selector.adapters.SevenListAdapter;
 import sociopathycheck.selector.models.DarkSky;
 import sociopathycheck.selector.models.Photo;
 import sociopathycheck.selector.models.Place;
@@ -96,10 +97,14 @@ public class WeatherActivity extends AppCompatActivity {
     private boolean isClicked = false;
     private boolean isClickedTwo = false;
     private boolean isClickedThree = false;
+    private boolean isClickedFour = false;
     public ArrayList<String> urlStrings = new ArrayList<String>();
     private String cityInfoUrl;
     private String population;
     public ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+
+    private static final int MAX_WIDTH = 400;
+    private static final int MAX_HEIGHT = 300;
 
 
     @Bind(R.id.locationTextView)
@@ -133,12 +138,17 @@ public class WeatherActivity extends AppCompatActivity {
     @Bind(R.id.yelpButton)
     Button mYelpButton;
     @Bind(R.id.summaryTextView) TextView mSummaryTextView;
-    @Bind(R.id.summaryButton) Button mSummaryButton;
+    @Bind(R.id.sevenDayButton) Button mSevenDayButton;
+    @Bind(R.id.recyclerViewSeven) RecyclerView mRecyclerViewSeven;
+
+
 
 
     public ArrayList photo_list = new ArrayList<>();
     private RestaurantListAdapter mAdapter;
     private final OkHttpClient client = new OkHttpClient();
+    private SevenListAdapter mSevenAdapter;
+
 
     public static final String TAG = WeatherActivity.class.getSimpleName();
 
@@ -151,14 +161,14 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
 
-
         mPopulationTextView.setVisibility(View.INVISIBLE);
         mPopulationTwoTextView.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mYelpButton.setVisibility(View.INVISIBLE);
         mPhotosButton.setVisibility(View.INVISIBLE);
         mSummaryTextView.setVisibility(View.INVISIBLE);
-        mSummaryButton.setVisibility(View.INVISIBLE);
+        mSevenDayButton.setVisibility(View.INVISIBLE);
+        mRecyclerViewSeven.setVisibility(View.INVISIBLE);
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
@@ -172,7 +182,7 @@ public class WeatherActivity extends AppCompatActivity {
         mPopulationTwoTextView.setTypeface(quicksand);
         mYelpButton.setTypeface(quicksand);
         mSummaryTextView.setTypeface(quicksand);
-        mSummaryButton.setTypeface(quicksand);
+        mSevenDayButton.setTypeface(quicksand);
 
         mListViewTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -189,9 +199,10 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
-        mSummaryButton.setOnClickListener(new View.OnClickListener() {
+        mSevenDayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getDark(latLong);
 
 
                 if (isClickedThree == true) {
@@ -201,6 +212,17 @@ public class WeatherActivity extends AppCompatActivity {
                     mSummaryTextView.setVisibility(View.VISIBLE);
 
                     isClickedThree = true;
+                }
+
+
+
+                if (isClickedFour == true) {
+                    mRecyclerViewSeven
+                            .setVisibility(View.INVISIBLE);
+                } else if (isClickedFour == false) {
+                    mRecyclerViewSeven.setVisibility(View.VISIBLE);
+
+                    isClickedFour = true;
                 }
             }
         });
@@ -229,7 +251,7 @@ public class WeatherActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mPhotosButton.setVisibility(View.VISIBLE);
                 mYelpButton.setVisibility(View.VISIBLE);
-                mSummaryButton.setVisibility(View.VISIBLE);
+                mSevenDayButton.setVisibility(View.VISIBLE);
 
                 newSearch = mSearchCities.getText().toString();
                 mSearchCities.setText("");
@@ -245,7 +267,7 @@ public class WeatherActivity extends AppCompatActivity {
                 }
 
                 getPlaces(latLong);
-                getDark(latLong);
+
 
                 initViews();
                 cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
@@ -342,7 +364,6 @@ public class WeatherActivity extends AppCompatActivity {
                             times[i] = mTimes.get(i).getTime();
                             militaryTimeTwo = times[i];
                             times[i] = times[i].substring(times[i].lastIndexOf(" "));
-
 
                             times[i] = times[i].replaceAll("[:]", "");
 
@@ -522,6 +543,7 @@ public class WeatherActivity extends AppCompatActivity {
         final DarkService darkService = new DarkService();
 
         darkService.findDark(latLong, new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -530,28 +552,23 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 mDarkSkies = darkService.processResults(response);
+
                 WeatherActivity.this.runOnUiThread(new Runnable() {
-                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
                     @Override
                     public void run() {
-//                        ArrayAdapter adapter = new ArrayAdapter(WeatherActivity.this,
-//                                android.R.layout.simple_list_item_1);
-//                        mListView.setAdapter(adapter);
-
-                        for (DarkSky darkSky : mDarkSkies) {
-                            String summaryText = darkSky.getSummary().toString();
-                            mSummaryTextView.setText(summaryText);
-                        }
+                        mSevenAdapter = new SevenListAdapter(getApplicationContext(), mDarkSkies);
+                        mRecyclerViewSeven.setAdapter(mSevenAdapter);
+                        RecyclerView.LayoutManager layoutManager =
+                                new LinearLayoutManager(WeatherActivity.this);
+                        mRecyclerViewSeven.setLayoutManager(layoutManager);
+                        mRecyclerViewSeven.setHasFixedSize(true);
                     }
                 });
             }
         });
     }
-
-
-
 }
-
 
 
 
