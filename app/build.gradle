@@ -16,6 +16,7 @@ android {
             it.buildConfigField 'String', 'YELP_CONSUMER_SECRET', YelpConsumerSecret
             it.buildConfigField 'String', 'YELP_TOKEN', YelpToken
             it.buildConfigField 'String', 'YELP_TOKEN_SECRET', YelpTokenSecret
+            it.buildConfigField 'String', 'DARKSKY_API_KEY', DarkSkyAPIKey
 
             it.buildConfigField 'String', 'WEATHER_API_KEY', WeatherAPIKey
             it.buildConfigField 'String', 'TIME_API_KEY', TimeAPIKey
@@ -44,6 +45,7 @@ dependencies {
     compile 'joda-time:joda-time:2.9.5'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.google.android.gms:play-services-places:9.4.0'
 
 
     compile 'com.android.support:recyclerview-v7:23.1.1'

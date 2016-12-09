@@ -58,4 +58,12 @@ public class Constants {
 
         public static final String PHOTOS_BASE_URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800";
 
+
+        // Dark Sky
+
+        public static final String DARKSKY_API_KEY = BuildConfig.DARKSKY_API_KEY;
+
+        public static final String DARKSKY_BASE_URL = "https://api.darksky.net/forecast/";
+
+
 }

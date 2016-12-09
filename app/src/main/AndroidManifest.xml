@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="sociopathycheck.selector">
+    package="sociopathycheck.selector"
+    >
+
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -32,6 +34,9 @@
             android:name=".ui.PhotoActivity"
             android:label="@string/title_activity_photo"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB-MuyI9AwLi50nzHvzlmBaEKi9VW9VKZg"/>
     </application>
 
 </manifest>

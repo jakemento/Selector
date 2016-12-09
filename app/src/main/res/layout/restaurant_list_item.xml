@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:background="#ffffff"
         android:layout_height="match_parent"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:backgroundTint="@color/common_google_signin_btn_text_dark_focused">
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +25,7 @@
             android:id="@+id/restaurantNameTextView"
             android:textStyle="bold"
             android:text="Restaurant Name"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/cardview_light_background"
             android:textSize="18dp" />
 
         <TextView
@@ -35,7 +36,8 @@
             android:layout_below="@+id/restaurantNameTextView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textStyle="italic"/>
+            android:textStyle="italic"
+            android:textColor="@color/Primary" />
 
 
         <RelativeLayout
@@ -49,7 +51,7 @@
                 android:id="@+id/ratingTextView"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/cardview_light_background"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

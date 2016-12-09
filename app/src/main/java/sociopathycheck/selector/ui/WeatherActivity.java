@@ -29,18 +29,31 @@ import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.DataAdapter;
 import sociopathycheck.selector.R;
 import sociopathycheck.selector.adapters.RestaurantListAdapter;
+import sociopathycheck.selector.models.DarkSky;
 import sociopathycheck.selector.models.Photo;
 import sociopathycheck.selector.models.Place;
 import sociopathycheck.selector.models.Population;
 import sociopathycheck.selector.models.Restaurant;
 import sociopathycheck.selector.models.Time;
 import sociopathycheck.selector.models.Weather;
+import sociopathycheck.selector.services.DarkService;
 import sociopathycheck.selector.services.PlaceService;
 import sociopathycheck.selector.services.PopulationService;
 import sociopathycheck.selector.services.WeatherService;
 import sociopathycheck.selector.services.YelpService;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import android.support.v4.app.FragmentActivity;
+
 
 import android.widget.TextView;
+
+
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 
 import org.joda.time.DateTime;
@@ -57,6 +70,9 @@ public class WeatherActivity extends AppCompatActivity {
 
     public ArrayList<Population> mPopulations = new ArrayList<>();
     public ArrayList<Weather> mWeathers = new ArrayList<>();
+
+    public ArrayList<DarkSky> mDarkSkies = new ArrayList<>();
+
     public ArrayList<Time> mTimes = new ArrayList<>();
     public ArrayList<Place> mPlaces = new ArrayList<>();
     private String militaryTime;
@@ -79,6 +95,7 @@ public class WeatherActivity extends AppCompatActivity {
     private String [] photoArray;
     private boolean isClicked = false;
     private boolean isClickedTwo = false;
+    private boolean isClickedThree = false;
     public ArrayList<String> urlStrings = new ArrayList<String>();
     private String cityInfoUrl;
     private String population;
@@ -115,12 +132,13 @@ public class WeatherActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     @Bind(R.id.yelpButton)
     Button mYelpButton;
+    @Bind(R.id.summaryTextView) TextView mSummaryTextView;
+    @Bind(R.id.summaryButton) Button mSummaryButton;
+
 
     public ArrayList photo_list = new ArrayList<>();
     private RestaurantListAdapter mAdapter;
     private final OkHttpClient client = new OkHttpClient();
-
-
 
     public static final String TAG = WeatherActivity.class.getSimpleName();
 
@@ -128,14 +146,19 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         ButterKnife.bind(this);
+
+
         mPopulationTextView.setVisibility(View.INVISIBLE);
         mPopulationTwoTextView.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mYelpButton.setVisibility(View.INVISIBLE);
         mPhotosButton.setVisibility(View.INVISIBLE);
+        mSummaryTextView.setVisibility(View.INVISIBLE);
+        mSummaryButton.setVisibility(View.INVISIBLE);
 
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
@@ -148,7 +171,8 @@ public class WeatherActivity extends AppCompatActivity {
         mPhotosButton.setTypeface(quicksand);
         mPopulationTwoTextView.setTypeface(quicksand);
         mYelpButton.setTypeface(quicksand);
-
+        mSummaryTextView.setTypeface(quicksand);
+        mSummaryButton.setTypeface(quicksand);
 
         mListViewTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -164,6 +188,24 @@ public class WeatherActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mSummaryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (isClickedThree == true) {
+                    mSummaryTextView.setVisibility(View.INVISIBLE);
+                    isClickedThree = false;
+                } else if (isClickedThree == false) {
+                    mSummaryTextView.setVisibility(View.VISIBLE);
+
+                    isClickedThree = true;
+                }
+            }
+        });
+
+
 
         mYelpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,11 +223,13 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
+
         mSearchCitiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPhotosButton.setVisibility(View.VISIBLE);
                 mYelpButton.setVisibility(View.VISIBLE);
+                mSummaryButton.setVisibility(View.VISIBLE);
 
                 newSearch = mSearchCities.getText().toString();
                 mSearchCities.setText("");
@@ -201,6 +245,7 @@ public class WeatherActivity extends AppCompatActivity {
                 }
 
                 getPlaces(latLong);
+                getDark(latLong);
 
                 initViews();
                 cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
@@ -221,6 +266,7 @@ public class WeatherActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void getWeathers(String location) {
@@ -442,7 +488,6 @@ public class WeatherActivity extends AppCompatActivity {
         latLong = (latitude + "," + longitude);
     }
 
-
     private void getRestaurants(String location) {
         final YelpService yelpService = new YelpService();
 
@@ -472,6 +517,39 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void getDark(String latLong) {
+        final DarkService darkService = new DarkService();
+
+        darkService.findDark(latLong, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                mDarkSkies = darkService.processResults(response);
+                WeatherActivity.this.runOnUiThread(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void run() {
+//                        ArrayAdapter adapter = new ArrayAdapter(WeatherActivity.this,
+//                                android.R.layout.simple_list_item_1);
+//                        mListView.setAdapter(adapter);
+
+                        for (DarkSky darkSky : mDarkSkies) {
+                            String summaryText = darkSky.getSummary().toString();
+                            mSummaryTextView.setText(summaryText);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+
 }
 
 
