@@ -73,8 +73,6 @@ public class PhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo);
         ButterKnife.bind(this);
 
-
-
         final String[] PhotoArray = getIntent().getStringArrayExtra("photoArray");
 
 

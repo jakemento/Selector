@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_plus_signin_btn_text_dark_default">
+    >
 
 
     <RelativeLayout
@@ -181,15 +181,14 @@
             android:layout_alignEnd="@+id/populationTextView"
             android:maxEms="8"
             android:layout_weight="6"
-            />
+            android:textSize="10sp" />
 
         <android.support.v7.widget.RecyclerView
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:layout_above="@+id/yelpButton"
-            android:layout_alignLeft="@+id/listViewTwo"
-            android:layout_alignStart="@+id/listViewTwo"
-            android:id="@+id/recyclerViewSeven" />
+            android:layout_width="250dp"
+            android:layout_height="90dp"
+            android:id="@+id/recyclerViewSeven"
+            android:layout_above="@+id/recyclerView"
+            android:layout_alignParentEnd="true" />
 
 
     </RelativeLayout>

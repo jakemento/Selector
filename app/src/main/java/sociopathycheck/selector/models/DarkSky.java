@@ -23,7 +23,6 @@ public class DarkSky {
 
     public String getDate() {
         return mDate;
-
 }
     public String getTempHigh() {
         return mTempHigh;

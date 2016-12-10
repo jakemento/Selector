@@ -307,9 +307,9 @@ public class WeatherActivity extends AppCompatActivity {
                     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void run() {
-//                        ArrayAdapter adapter = new ArrayAdapter(WeatherActivity.this,
-//                                android.R.layout.simple_list_item_1);
-//                        mListView.setAdapter(adapter);
+
+                        final String weekSummary = getIntent().getStringExtra("weekSummary");
+                        mSummaryTextView.setText(weekSummary);
 
                         for (Weather weather : mWeathers) {
                             weatherIcon = weather.getDescription().toString();
@@ -337,6 +337,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 mWeatherIconImageView.setImageDrawable(getApplicationContext().getDrawable(R.drawable.sunny));
                             }
                         }
+
                     }
                 });
             }
@@ -563,6 +564,8 @@ public class WeatherActivity extends AppCompatActivity {
                                 new LinearLayoutManager(WeatherActivity.this);
                         mRecyclerViewSeven.setLayoutManager(layoutManager);
                         mRecyclerViewSeven.setHasFixedSize(true);
+
+                        mSummaryTextView.setText(DarkService.getSummary());
                     }
                 });
             }

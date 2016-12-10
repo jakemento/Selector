@@ -1,5 +1,8 @@
 package sociopathycheck.selector.services;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -20,12 +23,16 @@ import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.models.DarkSky;
 import sociopathycheck.selector.models.Restaurant;
 import sociopathycheck.selector.models.Weather;
+import sociopathycheck.selector.ui.WeatherActivity;
 
 /**
  * Created by JS on 12/8/16.
  */
 
 public class DarkService {
+    private static String weekSummary;
+
+
     public static final String TAG = DarkService.class.getSimpleName();
 
 
@@ -54,6 +61,8 @@ public class DarkService {
             if (response.isSuccessful()) {
                 JSONObject darkJSON = new JSONObject(jsonData);
                 JSONObject dailyJSON = darkJSON.getJSONObject("daily");
+                weekSummary = dailyJSON.getString("summary");
+
                 JSONArray dataArray = dailyJSON.getJSONArray("data");
                 for (int i = 0; i < dataArray.length(); i++) {
                     JSONObject sevenJSON = dataArray.getJSONObject(i);
@@ -67,6 +76,8 @@ public class DarkService {
 
                     DarkSky darksky = new DarkSky(summary, date, tempHigh, tempLow);
                     darkskies.add(darksky);
+
+
                 }
             }
         } catch (IOException e) {
@@ -76,6 +87,12 @@ public class DarkService {
         }
         return darkskies;
     }
+    public static String getSummary() {
+        return weekSummary;
+    }
+
 
 }
+
+
 

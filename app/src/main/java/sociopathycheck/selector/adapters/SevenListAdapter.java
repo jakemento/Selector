@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
         @Bind(R.id.tempHighTextViewSeven) TextView mTempHighTextViewSeven;
         @Bind(R.id.tempLowTextViewSeven) TextView mTempLowTextViewSeven;
         @Bind(R.id.summaryTextViewSeven) TextView mSummaryTextViewSeven;
+        @Bind(R.id. weatherImageViewSeven) ImageView mWeatherImageViewSeven;
 
         private Context mContext;
 
@@ -62,6 +64,21 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
             mSummaryTextViewSeven.setText(darksky.getSummary());
             mTempHighTextViewSeven.setText("High: "+ darksky.getTempHigh()+"˚");
             mTempLowTextViewSeven.setText("Low: " + darksky.getTempLow()+"˚");
+
+            String summary = darksky.getSummary();
+            if (summary.contains("rain")) {
+                mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.rainy));
+            } else if (summary.contains("sun")) {
+                mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.sunny));
+            } else if (summary.contains("snow")) {
+                mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.snow));
+            } else if (summary.contains("lightning")) {
+                mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.lightning));
+            } else if (summary.contains("partial")) {
+                mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.partialsunny));
+            } else if (summary.contains("cloud")) {
+                mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.cloudy));
         }
     }
+}
 }
