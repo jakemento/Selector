@@ -208,7 +208,6 @@ public class WeatherActivity extends AppCompatActivity {
                     mSummaryTextView.setVisibility(View.INVISIBLE);
                     isClickedThree = false;
                 } else if (isClickedThree == false) {
-                    getDark(latLong);
                     mSummaryTextView.setVisibility(View.VISIBLE);
 
                     isClickedThree = true;
@@ -220,6 +219,7 @@ public class WeatherActivity extends AppCompatActivity {
                     mRecyclerViewSeven
                             .setVisibility(View.INVISIBLE);
                 } else if (isClickedFour == false) {
+                    getDark(latLong);
                     mRecyclerViewSeven.setVisibility(View.VISIBLE);
 
                     isClickedFour = true;

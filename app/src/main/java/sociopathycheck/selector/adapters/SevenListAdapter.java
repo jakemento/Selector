@@ -66,9 +66,9 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
             mTempLowTextViewSeven.setText("Low: " + darksky.getTempLow()+"˚");
 
             String summary = darksky.getSummary();
-            if (summary.contains("rain")) {
+            if (summary.contains("rain") ||(summary.contains("precipitation") || (summary.contains("Drizzle")) || (summary.contains("Rain"))|| (summary.contains("showers")))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.rainy));
-            } else if (summary.contains("sun")) {
+            } else if (summary.contains("sun")|| (summary.contains("Sun"))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.sunny));
             } else if (summary.contains("snow")) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.snow));

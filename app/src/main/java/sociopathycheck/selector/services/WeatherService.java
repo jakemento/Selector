@@ -35,7 +35,6 @@ public class WeatherService {
 
         Call call = client.newCall(request);
         call.enqueue(callback);
-
     }
 
     public ArrayList<Weather> processResults(Response response) {

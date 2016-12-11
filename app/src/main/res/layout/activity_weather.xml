@@ -185,10 +185,10 @@
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="250dp"
-            android:layout_height="90dp"
             android:id="@+id/recyclerViewSeven"
             android:layout_above="@+id/recyclerView"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_height="70dp" />
 
 
     </RelativeLayout>
