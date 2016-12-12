@@ -1,5 +1,6 @@
 package sociopathycheck.selector.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,33 +23,35 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sociopathycheck.selector.R;
 import sociopathycheck.selector.models.Photo;
+import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class PhotoActivity extends AppCompatActivity {
+public class PhotoActivity extends Activity {
     public static final String TAG = PhotoActivity.class.getSimpleName();
-    @Bind(R.id.photoOne)
-    ImageView mPhotoOne;
-    @Bind(R.id.photoTwo)
-    ImageView mPhotoTwo;
-    @Bind(R.id.photoThree)
-    ImageView mPhotoThree;
-    @Bind(R.id.photoFour)
-    ImageView mPhotoFour;
-    @Bind(R.id.photoFive)
-    ImageView mPhotoFive;
-    @Bind(R.id.photoSix)
-    ImageView mPhotoSix;
-    @Bind(R.id.photoSeven)
-    ImageView mPhotoSeven;
-    @Bind(R.id.photoEight)
-    ImageView mPhotoEight;
 
-
+    @Bind(R.id.photoViewOne)
+    PhotoView mPhotoViewOne;
+    @Bind(R.id.photoViewTwo)
+    PhotoView mPhotoViewTwo;
+    @Bind(R.id.photoViewThree)
+    PhotoView mPhotoViewThree;
+    @Bind(R.id.photoViewFour)
+    PhotoView mPhotoViewFour;
+    @Bind(R.id.photoViewFive)
+    PhotoView mPhotoViewFive;
+    @Bind(R.id.photoViewSix)
+    PhotoView mPhotoViewSix;
+    @Bind(R.id.photoViewSeven)
+    PhotoView mPhotoViewSeven;
+    @Bind(R.id.photoViewEight)
+    PhotoView mPhotoViewEight;
 
 
     @Bind(R.id. emptyPhotosTextView)
@@ -128,50 +131,155 @@ public class PhotoActivity extends AppCompatActivity {
 
 
                 if (photoOne.contains("http")) {
-                    imageLoader.displayImage(photoOne, mPhotoOne);
+
+                    final PhotoViewAttacher attacher = new PhotoViewAttacher(mPhotoViewOne);
+
+                    Picasso.with(this)
+                            .load(photoOne)
+                            .into(mPhotoViewOne, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    attacher.update();
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 } else {
-                    mPhotoOne.setVisibility(View.INVISIBLE);
+                    mPhotoViewOne.setVisibility(View.INVISIBLE);
                 }
 
                 if (photoTwo.contains("http")) {
-                    imageLoader.displayImage(photoTwo, mPhotoTwo);
+                    final PhotoViewAttacher attacherTwo = new PhotoViewAttacher(mPhotoViewTwo);
+
+                    Picasso.with(this)
+                            .load(photoTwo)
+                            .into(mPhotoViewTwo, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    attacherTwo.update();
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 } else {
-                    mPhotoTwo.setVisibility(View.INVISIBLE);
+                    mPhotoViewTwo.setVisibility(View.INVISIBLE);
                 }
 
                 if (photoThree.contains("http")) {
-                    imageLoader.displayImage(photoThree, mPhotoThree);
+                    final PhotoViewAttacher attacherThree = new PhotoViewAttacher(mPhotoViewThree);
+
+                    Picasso.with(this)
+                            .load(photoThree)
+                            .into(mPhotoViewThree, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    attacherThree.update();
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                  } else {
-                    mPhotoThree.setVisibility(View.INVISIBLE);
+                    mPhotoViewThree.setVisibility(View.INVISIBLE);
                 }
 
                 if (photoFour.contains("http")) {
-                    imageLoader.displayImage(photoFour, mPhotoFour);
+                    final PhotoViewAttacher attacherFour = new PhotoViewAttacher(mPhotoViewFour);
+
+                    Picasso.with(this)
+                            .load(photoFour)
+                            .into(mPhotoViewFour, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    attacherFour.update();
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 } else {
-                    mPhotoFour.setVisibility(View.INVISIBLE);
+                    mPhotoViewFour.setVisibility(View.INVISIBLE);
                 }
 
                 if (photoFive.contains("http")) {
-                    imageLoader.displayImage(photoFive, mPhotoFive);
+                    final PhotoViewAttacher attacherFive = new PhotoViewAttacher(mPhotoViewFive);
+
+                    Picasso.with(this)
+                            .load(photoFive)
+                            .into(mPhotoViewFive, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    attacherFive.update();
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 } else {
-                    mPhotoFive.setVisibility(View.INVISIBLE);
+                    mPhotoViewFive.setVisibility(View.INVISIBLE);
                 }
                 if (photoSix.contains("http")) {
-                    imageLoader.displayImage(photoSix, mPhotoSix);
+                    final PhotoViewAttacher attacherSix = new PhotoViewAttacher(mPhotoViewSix);
+
+                    Picasso.with(this)
+                            .load(photoSix)
+                            .into(mPhotoViewSix, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    attacherSix.update();
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 } else {
-                    mPhotoSix.setVisibility(View.INVISIBLE);
+                    mPhotoViewSix.setVisibility(View.INVISIBLE);
 
                 }
                 if (photoSeven.contains("http")) {
-                    imageLoader.displayImage(photoSeven, mPhotoSeven);
+                    final PhotoViewAttacher attacherSeven = new PhotoViewAttacher(mPhotoViewSeven);
+
+                    Picasso.with(this)
+                            .load(photoSeven)
+                            .into(mPhotoViewSeven, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    attacherSeven.update();
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 } else {
-                    mPhotoSeven.setVisibility(View.INVISIBLE);
+                    mPhotoViewSeven.setVisibility(View.INVISIBLE);
 
                 }
                 if (photoEight.contains("http")) {
-                    imageLoader.displayImage(photoEight, mPhotoEight);
+                    final PhotoViewAttacher attacherEight = new PhotoViewAttacher(mPhotoViewEight);
+
+                    Picasso.with(this)
+                            .load(photoEight)
+                            .into(mPhotoViewEight, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    attacherEight.update();
+                                }
+
+                                @Override
+                                public void onError() {
+                                }
+                            });
                 } else {
-                    mPhotoEight.setVisibility(View.INVISIBLE);
+                    mPhotoViewEight.setVisibility(View.INVISIBLE);
 
                 }
     }

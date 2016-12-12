@@ -2,29 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="60dp"
+    android:background="@android:color/black">
 
     <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/weatherImageViewSeven"
-        android:src="@drawable/redwood"
         android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:background="#ffffff"
+        android:background="@android:color/black"
         android:layout_height="match_parent"
-        android:padding="10dp">
-
+        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dateTextViewSeven"
             android:textSize="10dp"
             android:text="Date"
-            android:textColor="@color/cardview_dark_background"/>
+            android:textColor="@color/Primary"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,11 +35,12 @@
             android:layout_below="@+id/tempHighTextViewSeven"
             android:layout_alignParentStart="true"
             android:textStyle="italic"
-            android:textColor="@color/cardview_dark_background" />
+            android:textColor="@color/Primary" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textStyle="italic"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/Primary"
                 android:textSize="10sp" />
             <TextView
                 android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textStyle="italic"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/Primary"
                 android:textSize="10sp" />
         </LinearLayout>
 

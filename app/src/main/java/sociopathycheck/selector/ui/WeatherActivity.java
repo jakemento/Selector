@@ -169,7 +169,6 @@ public class WeatherActivity extends AppCompatActivity {
         mSummaryTextView.setVisibility(View.INVISIBLE);
         mSevenDayButton.setVisibility(View.INVISIBLE);
         mRecyclerViewSeven.setVisibility(View.INVISIBLE);
-
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
         mPopulationTextView.setTypeface(quicksand);
@@ -202,6 +201,10 @@ public class WeatherActivity extends AppCompatActivity {
         mSevenDayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mRecyclerView.isShown()) {
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+
+                }
 
 
                 if (isClickedThree == true) {
@@ -212,7 +215,6 @@ public class WeatherActivity extends AppCompatActivity {
 
                     isClickedThree = true;
                 }
-
 
 
                 if (isClickedFour == true) {
@@ -232,7 +234,10 @@ public class WeatherActivity extends AppCompatActivity {
         mYelpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mRecyclerViewSeven.isShown()) {
+                    mRecyclerViewSeven.setVisibility(View.INVISIBLE);
 
+                }
 
                 if (isClickedTwo == true) {
                     mRecyclerView.setVisibility(View.INVISIBLE);
