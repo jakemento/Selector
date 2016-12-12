@@ -569,7 +569,6 @@ public class WeatherActivity extends AppCompatActivity {
                                 new LinearLayoutManager(WeatherActivity.this);
                         mRecyclerViewSeven.setLayoutManager(layoutManager);
                         mRecyclerViewSeven.setHasFixedSize(true);
-
                         mSummaryTextView.setText(DarkService.getSummary());
                     }
                 });

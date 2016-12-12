@@ -70,7 +70,7 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.rainy));
             } else if (summary.contains("sun")|| (summary.contains("Sun"))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.sunny));
-            } else if (summary.contains("Snow")|| (summary.contains("snow"))) {
+            } else if (summary.contains("Snow")|| (summary.contains("snow")) || (summary.contains("Flurries"))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.snow));
             } else if (summary.contains("Lightning")|| (summary.contains("lightning"))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.lightning));
