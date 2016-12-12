@@ -1,6 +1,7 @@
 package sociopathycheck.selector.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,12 +12,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import sociopathycheck.selector.R;
 import sociopathycheck.selector.models.Restaurant;
+import sociopathycheck.selector.ui.RestaurantDetailActivity;
 import sociopathycheck.selector.ui.WeatherActivity;
 
 /**
@@ -24,6 +28,7 @@ import sociopathycheck.selector.ui.WeatherActivity;
  */
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
+
     private ArrayList<Restaurant> mRestaurants = new ArrayList<>();
     private Context mContext;
 
@@ -31,6 +36,9 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         mContext = context;
         mRestaurants = restaurants;
     }
+
+
+
 
     @Override
     public RestaurantListAdapter.RestaurantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,20 +57,38 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         return mRestaurants.size();
     }
 
-    public class RestaurantViewHolder extends RecyclerView.ViewHolder {
+    public class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.restaurantImageView) ImageView mRestaurantImageView;
         @Bind(R.id.restaurantNameTextView) TextView mNameTextView;
         @Bind(R.id.categoryTextView) TextView mCategoryTextView;
         @Bind(R.id.ratingTextView) TextView mRatingTextView;
         private Context mContext;
+        private static final int MAX_WIDTH = 200;
+        private static final int MAX_HEIGHT = 200;
 
         public RestaurantViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+            itemView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View v) {
+            int itemPosition = getLayoutPosition();
+            Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
+            intent.putExtra("position", itemPosition);
+            intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
+            mContext.startActivity(intent);
         }
 
         public void bindRestaurant(Restaurant restaurant) {
+
+            Picasso.with(mContext)
+                    .load(restaurant.getImageUrl())
+                    .resize(MAX_WIDTH, MAX_HEIGHT)
+                    .centerCrop()
+                    .into(mRestaurantImageView);
+
             mNameTextView.setText(restaurant.getName());
             mCategoryTextView.setText(restaurant.getCategories().get(0));
             mRatingTextView.setText("Rating: " + restaurant.getRating() + "/5");

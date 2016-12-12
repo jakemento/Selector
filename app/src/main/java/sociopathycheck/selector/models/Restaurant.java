@@ -1,30 +1,34 @@
 package sociopathycheck.selector.models;
 
 import java.util.ArrayList;
+import org.parceler.Parcel;
 
 /**
  * Created by JS on 12/6/16.
  */
-
+@Parcel
 public class Restaurant {
-    private String mName;
-    private String mPhone;
-    private String mWebsite;
-    private double mRating;
-    private String mImageUrl;
-    private ArrayList<String> mAddress = new ArrayList<>();
-    private double mLatitude;
-    private double mLongitude;
-    private ArrayList<String> mCategories = new ArrayList<>();
+     String mName;
+     String mPhone;
+     String mWebsite;
+     double mRating;
+     String mImageUrl;
+     ArrayList<String> mAddress = new ArrayList<>();
+     double mLatitude;
+     double mLongitude;
+     ArrayList<String> mCategories = new ArrayList<>();
+
+    public Restaurant() {}
 
     public Restaurant(String name, String phone, String website,
                       double rating, String imageUrl, ArrayList<String> address,
                       double latitude, double longitude, ArrayList<String> categories) {
+
         this.mName = name;
         this.mPhone = phone;
         this.mWebsite = website;
         this.mRating = rating;
-        this.mImageUrl = imageUrl;
+        this.mImageUrl = getLargeImageUrl(imageUrl);
         this.mAddress = address;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
