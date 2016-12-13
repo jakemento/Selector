@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +33,8 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
     private ArrayList<DarkSky> mDarkSkies = new ArrayList<>();
     private Context mContext;
     private String numberDate;
+    private Date newDate;
+    private int dayOfWeek;
     private Date myDate;
 
     public SevenListAdapter(Context context, ArrayList<DarkSky> darkskies) {
@@ -76,7 +83,17 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
                 String formattedDate = sdf.format(date);
             String newFormattedDate = formattedDate.replaceAll("-", "/");
 
-            mDateTextViewSeven.setText(newFormattedDate);
+            DateTimeFormatter formatter = DateTimeFormat.forPattern( "MM/dd/yyyy" );
+            LocalDate localDate = formatter.parseLocalDate( newFormattedDate );
+            int dayOfWeek = localDate.getDayOfWeek();
+            if (dayOfWeek == 1) {  mDateTextViewSeven.setText("Monday"); }
+            else if (dayOfWeek == 2) {  mDateTextViewSeven.setText("Tuesday"); }
+            else if (dayOfWeek == 3) {  mDateTextViewSeven.setText("Wednesday"); }
+            else if (dayOfWeek == 4) {  mDateTextViewSeven.setText("Thursday"); }
+            else if (dayOfWeek == 5) {  mDateTextViewSeven.setText("Friday"); }
+            else if (dayOfWeek == 6) {  mDateTextViewSeven.setText("Saturday"); }
+            else if (dayOfWeek == 7) {  mDateTextViewSeven.setText("Sunday"); }
+
             mSummaryTextViewSeven.setText(darksky.getSummary());
             mTempHighTextViewSeven.setText("High: "+ darksky.getTempHigh()+"˚");
             mTempLowTextViewSeven.setText("Low: " + darksky.getTempLow()+"˚");
