@@ -8,7 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,6 +27,8 @@ import sociopathycheck.selector.models.DarkSky;
 public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.SevenViewHolder> {
     private ArrayList<DarkSky> mDarkSkies = new ArrayList<>();
     private Context mContext;
+    private String numberDate;
+    private Date myDate;
 
     public SevenListAdapter(Context context, ArrayList<DarkSky> darkskies) {
         mContext = context;
@@ -60,7 +67,16 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
         }
 
         public void bindSeven(DarkSky darksky) {
-            mDateTextViewSeven.setText(darksky.getDate());
+
+            numberDate = darksky.getDate();
+            long longDate = Integer.parseInt(numberDate);
+            Date date = new Date(longDate*1000L);
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
+                String formattedDate = sdf.format(date);
+            String newFormattedDate = formattedDate.replaceAll("-", "/");
+
+            mDateTextViewSeven.setText(newFormattedDate);
             mSummaryTextViewSeven.setText(darksky.getSummary());
             mTempHighTextViewSeven.setText("High: "+ darksky.getTempHigh()+"˚");
             mTempLowTextViewSeven.setText("Low: " + darksky.getTempLow()+"˚");

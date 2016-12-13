@@ -201,10 +201,7 @@ public class WeatherActivity extends AppCompatActivity {
         mSevenDayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mRecyclerView.isShown()) {
-                    mRecyclerView.setVisibility(View.INVISIBLE);
 
-                }
 
 
                 if (isClickedThree == true) {
@@ -221,7 +218,7 @@ public class WeatherActivity extends AppCompatActivity {
                     mRecyclerViewSeven
                             .setVisibility(View.INVISIBLE);
                 } else if (isClickedFour == false) {
-                    getDark(latLong);
+
                     mRecyclerViewSeven.setVisibility(View.VISIBLE);
 
                     isClickedFour = true;
@@ -234,10 +231,6 @@ public class WeatherActivity extends AppCompatActivity {
         mYelpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mRecyclerViewSeven.isShown()) {
-                    mRecyclerViewSeven.setVisibility(View.INVISIBLE);
-
-                }
 
                 if (isClickedTwo == true) {
                     mRecyclerView.setVisibility(View.INVISIBLE);
@@ -275,6 +268,8 @@ public class WeatherActivity extends AppCompatActivity {
 
 
                 initViews();
+                getDark(latLong);
+
                 cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
                 getPopulation(cityInfoUrl);
                 mLocationTextView.setText(newSearch);
