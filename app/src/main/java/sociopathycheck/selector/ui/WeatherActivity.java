@@ -28,6 +28,7 @@ import okhttp3.Response;
 import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.DataAdapter;
 import sociopathycheck.selector.R;
+import sociopathycheck.selector.adapters.FourSquareListAdapter;
 import sociopathycheck.selector.adapters.RestaurantListAdapter;
 import sociopathycheck.selector.adapters.SevenListAdapter;
 import sociopathycheck.selector.models.DarkSky;
@@ -144,12 +145,14 @@ public class WeatherActivity extends AppCompatActivity {
     @Bind(R.id.summaryTextView) TextView mSummaryTextView;
     @Bind(R.id.sevenDayButton) Button mSevenDayButton;
     @Bind(R.id.recyclerViewSeven) RecyclerView mRecyclerViewSeven;
+    @Bind(R.id.recyclerViewFourSquare) RecyclerView mRecyclerViewFourSquare;
 
 
 
 
     public ArrayList photo_list = new ArrayList<>();
     private RestaurantListAdapter mAdapter;
+    private FourSquareListAdapter mFourAdapter;
     private final OkHttpClient client = new OkHttpClient();
     private SevenListAdapter mSevenAdapter;
 
@@ -588,15 +591,17 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) {
                 mFoursquares = fourSquareService.processResults(response);
+
                 WeatherActivity.this.runOnUiThread(new Runnable() {
-                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
                     @Override
                     public void run() {
-
-                        for (FourSquare foursquare : mFoursquares) {
-                            Log.d(TAG, foursquare.getVenueName());
-                        }
-
+                        mFourAdapter = new FourSquareListAdapter(getApplicationContext(), mFoursquares);
+                        mRecyclerViewFourSquare.setAdapter(mFourAdapter);
+                        RecyclerView.LayoutManager layoutManagerFour =
+                                new LinearLayoutManager(WeatherActivity.this);
+                        mRecyclerViewFourSquare.setLayoutManager(layoutManagerFour);
+                        mRecyclerViewFourSquare.setHasFixedSize(true);
                     }
                 });
             }

@@ -24,6 +24,8 @@ public class Constants {
         public static final String FOURSQUARE_BASE_URL = "https://api.foursquare.com/v2/venues/explore?";
         public static final String FOURSQUARE_LAT_LONG = "ll";
         public static final String FOURSQUARE_EXTRAS = "&v=20161214%20&m=foursquare";
+        public static final String FOURSQUARE_CID = "client_id";
+        public static final String FOURSQUARE_CS = "client_secret";
 
 
         //WEATHER

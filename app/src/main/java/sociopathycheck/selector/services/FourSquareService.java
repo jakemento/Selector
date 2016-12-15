@@ -18,9 +18,6 @@ import okhttp3.Response;
 import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.models.FourSquare;
 
-/**
- * Created by JS on 12/14/16.
- */
 
 public class FourSquareService {
     public static void findVenues(String latLong, Callback callback) {
@@ -34,11 +31,12 @@ public class FourSquareService {
                 .build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.FOURSQUARE_BASE_URL).newBuilder();
         urlBuilder.addQueryParameter(Constants.FOURSQUARE_LAT_LONG, latLong);
-        urlBuilder.addQueryParameter(Constants.FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_ID);
-        urlBuilder.addQueryParameter(Constants.FOURSQUARE_CLIENT_SECRET, FOURSQUARE_CLIENT_SECRET);
-        urlBuilder.addQueryParameter(Constants.FOURSQUARE_EXTRAS, FOURSQUARE_EXTRAS);
+        urlBuilder.addQueryParameter(Constants.FOURSQUARE_CID, FOURSQUARE_CLIENT_ID);
+        urlBuilder.addQueryParameter(Constants.FOURSQUARE_CS, FOURSQUARE_CLIENT_SECRET);
 
         String url = urlBuilder.build().toString();
+        url = url + (FOURSQUARE_EXTRAS);
+        Log.d("THIS", url);
 
         Request request = new Request.Builder()
                 .url(url)
@@ -53,6 +51,7 @@ public class FourSquareService {
 
         try {
             String jsonData = response.body().string();
+            Log.d("THIS", jsonData);
             if (response.isSuccessful()) {
 
                 JSONObject fourJSON = new JSONObject(jsonData);
