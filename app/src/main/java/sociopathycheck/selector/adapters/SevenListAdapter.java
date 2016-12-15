@@ -101,7 +101,7 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
             String summary = darksky.getSummary();
             if (summary.contains("rain") ||(summary.contains("precipitation") || (summary.contains("Drizzle")) || (summary.contains("Rain"))|| (summary.contains("showers")))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.rainy));
-            } else if (summary.contains("sun")|| (summary.contains("Sun"))) {
+            } else if (summary.contains("sun")|| (summary.contains("Sun"))|| (summary.contains("Clear"))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.sunny));
             } else if (summary.contains("Snow")|| (summary.contains("snow")) || (summary.contains("Flurries"))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.snow));
@@ -109,7 +109,7 @@ public class SevenListAdapter extends RecyclerView.Adapter<SevenListAdapter.Seve
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.lightning));
             } else if (summary.contains("partial")) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.partialsunny));
-            } else if (summary.contains("Cloud")|| (summary.contains("cloud"))) {
+            } else if (summary.contains("Cloud")|| (summary.contains("cloud")) || (summary.contains("Overcast"))) {
                 mWeatherImageViewSeven.setImageDrawable(this.mContext.getDrawable(R.drawable.cloudy));
         }
     }

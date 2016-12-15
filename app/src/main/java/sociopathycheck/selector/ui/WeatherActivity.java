@@ -101,6 +101,7 @@ public class WeatherActivity extends AppCompatActivity {
     private boolean isClickedTwo = false;
     private boolean isClickedThree = false;
     private boolean isClickedFour = false;
+    private boolean isClickedFive = false;
     public ArrayList<String> urlStrings = new ArrayList<String>();
     private String cityInfoUrl;
     private String population;
@@ -142,6 +143,7 @@ public class WeatherActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     @Bind(R.id.yelpButton)
     Button mYelpButton;
+    @Bind(R.id.venueButton) Button mVenueButton;
     @Bind(R.id.summaryTextView) TextView mSummaryTextView;
     @Bind(R.id.sevenDayButton) Button mSevenDayButton;
     @Bind(R.id.recyclerViewSeven) RecyclerView mRecyclerViewSeven;
@@ -176,6 +178,8 @@ public class WeatherActivity extends AppCompatActivity {
         mSummaryTextView.setVisibility(View.INVISIBLE);
         mSevenDayButton.setVisibility(View.INVISIBLE);
         mRecyclerViewSeven.setVisibility(View.INVISIBLE);
+        mVenueButton.setVisibility(View.INVISIBLE);
+        mRecyclerViewFourSquare.setVisibility(View.INVISIBLE);
         Typeface quicksand = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
         mLocationTextView.setTypeface(quicksand);
         mPopulationTextView.setTypeface(quicksand);
@@ -189,6 +193,7 @@ public class WeatherActivity extends AppCompatActivity {
         mYelpButton.setTypeface(quicksand);
         mSummaryTextView.setTypeface(quicksand);
         mSevenDayButton.setTypeface(quicksand);
+        mVenueButton.setTypeface(quicksand);
 
         mListViewTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -250,6 +255,21 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
 
+        mVenueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (isClickedFive == true) {
+                    mRecyclerViewFourSquare.setVisibility(View.INVISIBLE);
+                    isClickedFive = false;
+                } else if (isClickedFive == false) {
+                    mRecyclerViewFourSquare.setVisibility(View.VISIBLE);
+
+                    isClickedFive = true;
+                }
+            }
+        });
+
 
         mSearchCitiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,6 +277,7 @@ public class WeatherActivity extends AppCompatActivity {
                 mPhotosButton.setVisibility(View.VISIBLE);
                 mYelpButton.setVisibility(View.VISIBLE);
                 mSevenDayButton.setVisibility(View.VISIBLE);
+                mVenueButton.setVisibility(View.VISIBLE);
 
                 newSearch = mSearchCities.getText().toString();
                 mSearchCities.setText("");
