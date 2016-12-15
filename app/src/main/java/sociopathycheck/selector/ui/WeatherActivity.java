@@ -195,6 +195,9 @@ public class WeatherActivity extends AppCompatActivity {
         mSevenDayButton.setTypeface(quicksand);
         mVenueButton.setTypeface(quicksand);
 
+
+        mSearchCities.setText("Portland");
+
         mListViewTwo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

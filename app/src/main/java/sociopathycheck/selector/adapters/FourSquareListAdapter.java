@@ -2,15 +2,22 @@ package sociopathycheck.selector.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import sociopathycheck.selector.Constants;
 import sociopathycheck.selector.R;
 import sociopathycheck.selector.models.FourSquare;
 
@@ -18,6 +25,7 @@ import sociopathycheck.selector.models.FourSquare;
 public class FourSquareListAdapter extends RecyclerView.Adapter<FourSquareListAdapter.FourSquareViewHolder> {
     private ArrayList<FourSquare> mFourSquares = new ArrayList<>();
     private Context mContext;
+
 
     public FourSquareListAdapter(Context context, ArrayList<FourSquare> fourSquares) {
         mContext = context;
@@ -43,7 +51,7 @@ public class FourSquareListAdapter extends RecyclerView.Adapter<FourSquareListAd
 
     public class FourSquareViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.venueNameTextView) TextView mVenueNameTextView;
-        @Bind(R.id.venueIdTextView) TextView mVenueIdTextView;
+        @Bind(R.id.venueAddressTextView) TextView mVenueAddressTextView;
 
 
         private Context mContext;
@@ -57,10 +65,17 @@ public class FourSquareListAdapter extends RecyclerView.Adapter<FourSquareListAd
 
         public void bindVenue(FourSquare foursquare) {
             mVenueNameTextView.setText(foursquare.getVenueName());
+            String venueAddressUnformatted = foursquare.getVenueAddress();
+            String formattedVenueAddress = venueAddressUnformatted.replace("]", "").replace("[", "").replaceAll("\\(.*\\)", "").replaceAll("\"","");
+            mVenueAddressTextView.setText(formattedVenueAddress);
 
-            venueId = foursquare.getVenueId();
-            mVenueIdTextView.setText(foursquare.getVenueId());
+            // VENUE ID URL FOR NEW API CALL //
+//            venueId = foursquare.getVenueId();
+//            String url = "https://api.foursquare.com/v2/venues/" + venueId + "/photos?&client_id=" + Constants.FOURSQUARE_CLIENT_ID + "&" + "client_secret=" + Constants.FOURSQUARE_CLIENT_SECRET + "&v=20161214%20&m=foursquare";
+//            mVenueIdTextView.setText(url);
+//            Picasso.with(mVenueImageView.getContext()).load(url).into(mVenueImageView);
+
         }
-    }
 
+    }
 }
