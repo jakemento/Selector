@@ -21,6 +21,9 @@ android {
             it.buildConfigField 'String', 'WEATHER_API_KEY', WeatherAPIKey
             it.buildConfigField 'String', 'TIME_API_KEY', TimeAPIKey
             it.buildConfigField 'String', 'PLACE_API_KEY', PlaceAPIKey
+
+            it.buildConfigField 'String', 'FOURSQUARE_CLIENT_ID', FourSquareClientId
+            it.buildConfigField 'String', 'FOURSQUARE_CLIENT_SECRET', FourSquareClientSecret
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
