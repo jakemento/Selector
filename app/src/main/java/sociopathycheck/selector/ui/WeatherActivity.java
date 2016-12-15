@@ -31,6 +31,7 @@ import sociopathycheck.selector.R;
 import sociopathycheck.selector.adapters.RestaurantListAdapter;
 import sociopathycheck.selector.adapters.SevenListAdapter;
 import sociopathycheck.selector.models.DarkSky;
+import sociopathycheck.selector.models.FourSquare;
 import sociopathycheck.selector.models.Photo;
 import sociopathycheck.selector.models.Place;
 import sociopathycheck.selector.models.Population;
@@ -38,6 +39,7 @@ import sociopathycheck.selector.models.Restaurant;
 import sociopathycheck.selector.models.Time;
 import sociopathycheck.selector.models.Weather;
 import sociopathycheck.selector.services.DarkService;
+import sociopathycheck.selector.services.FourSquareService;
 import sociopathycheck.selector.services.PlaceService;
 import sociopathycheck.selector.services.PopulationService;
 import sociopathycheck.selector.services.WeatherService;
@@ -102,6 +104,8 @@ public class WeatherActivity extends AppCompatActivity {
     private String cityInfoUrl;
     private String population;
     public ArrayList<Restaurant> mRestaurants = new ArrayList<>();
+    public ArrayList<FourSquare> mFoursquares = new ArrayList<>();
+
 
     private static final int MAX_WIDTH = 400;
     private static final int MAX_HEIGHT = 300;
@@ -269,6 +273,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                 initViews();
                 getDark(latLong);
+                getVenues(latLong);
 
                 cityInfoUrl = "https://api.teleport.org/api/locations/" + latLong + "/?embed=location%3Anearest-cities%2Flocation%3Anearest-city";
                 getPopulation(cityInfoUrl);
@@ -565,6 +570,33 @@ public class WeatherActivity extends AppCompatActivity {
                         mRecyclerViewSeven.setLayoutManager(layoutManager);
                         mRecyclerViewSeven.setHasFixedSize(true);
                         mSummaryTextView.setText(DarkService.getSummary());
+                    }
+                });
+            }
+        });
+    }
+
+    private void getVenues(String latLong) {
+        final FourSquareService fourSquareService = new FourSquareService();
+
+        fourSquareService.findVenues(latLong, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                mFoursquares = fourSquareService.processResults(response);
+                WeatherActivity.this.runOnUiThread(new Runnable() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void run() {
+
+                        for (FourSquare foursquare : mFoursquares) {
+                            Log.d(TAG, foursquare.getVenueName());
+                        }
+
                     }
                 });
             }
