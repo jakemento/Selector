@@ -43,9 +43,11 @@ public class FourSquareListAdapter extends RecyclerView.Adapter<FourSquareListAd
 
     public class FourSquareViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.venueNameTextView) TextView mVenueNameTextView;
+        @Bind(R.id.venueIdTextView) TextView mVenueIdTextView;
 
 
         private Context mContext;
+        private String venueId;
 
         public FourSquareViewHolder(View itemView) {
             super(itemView);
@@ -55,6 +57,10 @@ public class FourSquareListAdapter extends RecyclerView.Adapter<FourSquareListAd
 
         public void bindVenue(FourSquare foursquare) {
             mVenueNameTextView.setText(foursquare.getVenueName());
+
+            venueId = foursquare.getVenueId();
+            mVenueIdTextView.setText(foursquare.getVenueId());
         }
     }
+
 }

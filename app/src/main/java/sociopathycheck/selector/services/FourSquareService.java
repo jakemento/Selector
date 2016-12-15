@@ -27,6 +27,7 @@ public class FourSquareService {
         String FOURSQUARE_EXTRAS = Constants.FOURSQUARE_EXTRAS;
 
 
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .build();
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.FOURSQUARE_BASE_URL).newBuilder();
@@ -76,6 +77,4 @@ public class FourSquareService {
         }
         return foursquares;
     }
-
-
 }

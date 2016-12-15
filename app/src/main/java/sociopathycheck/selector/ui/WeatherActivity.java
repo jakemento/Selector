@@ -237,9 +237,6 @@ public class WeatherActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
         mYelpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -249,7 +246,6 @@ public class WeatherActivity extends AppCompatActivity {
                     isClickedTwo = false;
                 } else if (isClickedTwo == false) {
                     mRecyclerView.setVisibility(View.VISIBLE);
-
                     isClickedTwo = true;
                 }
             }
