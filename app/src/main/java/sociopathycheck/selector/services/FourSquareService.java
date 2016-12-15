@@ -59,17 +59,16 @@ public class FourSquareService {
                 JSONArray groups = responseJSON.getJSONArray("groups");
                 JSONObject inGroups = groups.getJSONObject(0);
                 JSONArray items = inGroups.getJSONArray("items");
+
                 for (int i = 0; i < items.length(); i++) {
                     JSONObject itemJSON = items.getJSONObject(i);
                     String venueName = itemJSON.getJSONObject("venue").getString("name");
                     String venueId = itemJSON.getJSONObject("venue").getString("id");
-                    String venueAddress = itemJSON.getJSONObject("venue").getJSONObject("location").getString("address");
-
+                    String venueAddress = itemJSON.getJSONObject("venue").getJSONObject("location").getJSONArray("formattedAddress").toString();
                     FourSquare foursquare = new FourSquare(venueName, venueId, venueAddress);
                     foursquares.add(foursquare);
-
                 }
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
