@@ -52,6 +52,7 @@ public class FourSquareListAdapter extends RecyclerView.Adapter<FourSquareListAd
     public class FourSquareViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.venueNameTextView) TextView mVenueNameTextView;
         @Bind(R.id.venueAddressTextView) TextView mVenueAddressTextView;
+        @Bind(R.id.venueCategoryTextView) TextView mVenueCategoryTextView;
 
 
         private Context mContext;
@@ -67,7 +68,14 @@ public class FourSquareListAdapter extends RecyclerView.Adapter<FourSquareListAd
             mVenueNameTextView.setText(foursquare.getVenueName());
             String venueAddressUnformatted = foursquare.getVenueAddress();
             String formattedVenueAddress = venueAddressUnformatted.replace("]", "").replace("[", "").replaceAll("\\(.*\\)", "").replaceAll("\"","");
+            if (formattedVenueAddress.contains(",United States")) {
+                formattedVenueAddress = formattedVenueAddress.replace(",United States", "");
+            }
+            if (formattedVenueAddress.contains(" ,")) {
+                formattedVenueAddress = formattedVenueAddress.replace(" ,",", ");
+            }
             mVenueAddressTextView.setText(formattedVenueAddress);
+            mVenueCategoryTextView.setText(foursquare.getVenueCategory());
 
             // VENUE ID URL FOR NEW API CALL //
 //            venueId = foursquare.getVenueId();

@@ -10,11 +10,13 @@ public class FourSquare {
     private String mVenueName;
     private String mVenueId;
     private String mVenueAddress;
+    private String mVenueCategory;
 
-    public FourSquare(String venueName, String venueId, String venueAddress) {
+    public FourSquare(String venueName, String venueId, String venueAddress, String venueCategory) {
         this.mVenueName = venueName;
         this.mVenueId = venueId;
         this.mVenueAddress = venueAddress;
+        this.mVenueCategory = venueCategory;
     }
 
     public String getVenueName() {
@@ -26,9 +28,10 @@ public class FourSquare {
         return mVenueId;
     }
 
-    public String getVenueAddress() {
-        return mVenueAddress;
+    public String getVenueAddress() {return mVenueAddress;
     }
+
+    public String getVenueCategory() {return mVenueCategory; }
 
 }
 

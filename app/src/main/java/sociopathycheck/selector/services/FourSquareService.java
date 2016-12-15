@@ -65,9 +65,10 @@ public class FourSquareService {
                     JSONObject itemJSON = items.getJSONObject(i);
                     String venueName = itemJSON.getJSONObject("venue").getString("name");
                     String venueId = itemJSON.getJSONObject("venue").getString("id");
+                    String venueCategory = itemJSON.getJSONObject("venue").getJSONArray("categories").getJSONObject(0).getString("name");
 
                     String venueAddress = itemJSON.getJSONObject("venue").getJSONObject("location").getJSONArray("formattedAddress").toString();
-                    FourSquare foursquare = new FourSquare(venueName, venueId, venueAddress);
+                    FourSquare foursquare = new FourSquare(venueName, venueId, venueAddress, venueCategory);
                     foursquares.add(foursquare);
                 }
             }
